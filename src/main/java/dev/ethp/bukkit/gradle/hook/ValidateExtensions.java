@@ -22,7 +22,7 @@ public class ValidateExtensions extends Closure<Project> {
 	// -------------------------------------------------------------------------------------------------------------
 
 	public void doCall(Object... args) {
-		BukkitExtension extension = ((Project) this.getOwner()).getExtensions().getByType(BukkitExtension.class);
+		BukkitExtension extension = ((Project) this.getDelegate()).getExtensions().getByType(BukkitExtension.class);
 
 		if (extension.getName() == null) throw new InvalidUserDataException("The 'bukkit.name' property is required, but not set.");
 		if (extension.getMainClass() == null) throw new InvalidUserDataException("The 'bukkit.main' property is required, but not set.");
