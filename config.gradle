@@ -1,0 +1,33 @@
+ext {
+	meta = [:]
+
+	meta.group    = 'dev.ethp.bukkit'
+	meta.name     = 'gradle-bukkit'
+	meta.version  = '1.0'
+}
+
+//ext {
+//	pom = [:]
+//	pom.version          = '1.0.0'
+//	pom.group            = 'dev.ethp.bukkit'
+//	pom.artifact         = 'bukkit'
+//	pom.description      = 'A Gradle plugin for creating Bukkit plugins.'
+//	pom.website          = 'https://github.com/eth-p/gradle-bukkit'
+//
+//	pom.scm              = {
+//		url           = pom.website
+//		connection    = 'scm:git:https://github.com/eth-p/gradle-bukkit.git'
+//		devConnection = 'scm:git:ssh://git@github.com/eth-p/gradle-bukkit.git'
+//	}
+//
+//	pom.license          = {
+//		name = 'MIT License'
+//		url  = 'https://opensource.org/licenses/mit-license'
+//	}
+//
+//	meta = [:]
+//	meta.plugin          = {
+//		url              = pom.scm.website
+//		id               = "dev.ethp.bukkit"
+//	}
+//}
