@@ -4,8 +4,11 @@ import groovy.lang.Closure;
 
 import dev.ethp.bukkit.gradle.extension.BukkitExtension;
 
-import dev.ethp.bukkit.gradle.function.DependencyFunction;
-import dev.ethp.bukkit.gradle.function.DependencyFunction.Repository;
+import dev.ethp.bukkit.gradle.function.AbstractDependencyFunction;
+import dev.ethp.bukkit.gradle.function.AbstractDependencyFunction.Repository;
+import dev.ethp.bukkit.gradle.function.BukkitApi;
+import dev.ethp.bukkit.gradle.function.SpigotApi;
+import dev.ethp.bukkit.gradle.function.VaultApi;
 import dev.ethp.bukkit.gradle.hook.ValidateExtensions;
 import dev.ethp.bukkit.gradle.task.*;
 import org.gradle.api.Plugin;
@@ -28,9 +31,11 @@ public class GradleBukkit implements Plugin<Project> {
 
 		// Add dependency functions:
 		Repository spigot = new Repository("spigot-repo", "https://hub.spigotmc.org/nexus/content/repositories/snapshots/");
+		Repository jitpack = new Repository("jitpack-repo", "https://jitpack.io/");
 
-		target.getExtensions().add("bukkitApi", new DependencyFunction(target, spigot, (p, e) -> "org.bukkit:bukkit:" + e.getApi().getLibraryVersion()));
-		target.getExtensions().add("spigotApi", new DependencyFunction(target, spigot, (p, e) -> "org.spigotmc:spigot-api:" + e.getApi().getLibraryVersion()));
+		target.getExtensions().add("bukkitApi", new BukkitApi(target, spigot));
+		target.getExtensions().add("spigotApi", new SpigotApi(target, spigot));
+		target.getExtensions().add("vaultApi", new VaultApi(target, jitpack));
 
 		// Add maven central repository:
 		target.getRepositories().mavenCentral();

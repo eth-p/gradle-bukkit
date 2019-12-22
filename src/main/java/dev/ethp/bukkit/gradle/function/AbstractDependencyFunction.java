@@ -2,7 +2,6 @@ package dev.ethp.bukkit.gradle.function;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.function.BiFunction;
 
 import groovy.lang.Closure;
 
@@ -12,63 +11,79 @@ import org.gradle.api.artifacts.Dependency;
 import org.gradle.api.artifacts.DependencyResolutionListener;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.artifacts.ResolvableDependencies;
+import org.gradle.api.artifacts.dsl.DependencyHandler;
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository;
 
-public class DependencyFunction extends Closure<Project> implements DependencyResolutionListener {
+public abstract class AbstractDependencyFunction extends Closure<Project> implements DependencyResolutionListener {
 
 	// -------------------------------------------------------------------------------------------------------------
 	// Fields
 	// -------------------------------------------------------------------------------------------------------------
 
 	private Repository repository;
-	private BiFunction<Project, BukkitExtension, String> mapper;
 
 	// -------------------------------------------------------------------------------------------------------------
 	// Constructors
 	// -------------------------------------------------------------------------------------------------------------
 
-	public DependencyFunction(Project project, Repository repo, BiFunction<Project, BukkitExtension, String> dependency) {
+	public AbstractDependencyFunction(Project project, Repository repo) {
 		super(project);
 		this.repository = repo;
-		this.mapper = dependency;
 	}
 
-	protected void injectRepository() {
-		Project project = (Project) this.getDelegate();
+	// -------------------------------------------------------------------------------------------------------------
+	// Methods
+	// -------------------------------------------------------------------------------------------------------------
+
+	private void injectRepository() {
+		Project project = this.getProject();
 		if (project.getRepositories().findByName(this.repository.name) != null) return;
 		project.getRepositories().add(project.getRepositories().maven(new Closure(this) {
 			public void doCall() {
 				MavenArtifactRepository repository = (MavenArtifactRepository) this.getDelegate();
-				repository.setName(DependencyFunction.this.repository.getName());
-				repository.setUrl(DependencyFunction.this.repository.getUrl());
+				repository.setName(AbstractDependencyFunction.this.repository.getName());
+				repository.setUrl(AbstractDependencyFunction.this.repository.getUrl());
 			}
 		}));
 	}
+
+	protected void inject() {
+		this.injectRepository();
+		this.getProject().getGradle().addListener(this);
+	}
+
+	protected BukkitExtension getExtension() {
+		return this.getProject().getExtensions().getByType(BukkitExtension.class);
+	}
+
+	protected Project getProject() {
+		return (Project) this.getDelegate();
+	}
+
+	// -------------------------------------------------------------------------------------------------------------
+	// Abstract
+	// -------------------------------------------------------------------------------------------------------------
+
+	public abstract Dependency createDependency(DependencyHandler handler);
 
 	// -------------------------------------------------------------------------------------------------------------
 	// Override
 	// -------------------------------------------------------------------------------------------------------------
 
-	public void doCall() {
-		this.injectRepository();
-		Project project = (Project) this.getDelegate();
-		project.getGradle().addListener(this);
-	}
-
 	@Override
 	public void beforeResolve(ResolvableDependencies resolvableDependencies) {
-		Project project = (Project) this.getDelegate();
-		BukkitExtension extension = project.getExtensions().getByType(BukkitExtension.class);
+		Project project = this.getProject();
 
 		DependencySet dependencies = project.getConfigurations().getByName("compileOnly").getDependencies();
-		Dependency dependency = project.getDependencies().create(this.mapper.apply(project, extension));
+		Dependency dependency = createDependency(project.getDependencies());
 		dependencies.add(dependency);
 
 		project.getGradle().removeListener(this);
 	}
 
 	@Override
-	public void afterResolve(ResolvableDependencies resolvableDependencies) {}
+	public void afterResolve(ResolvableDependencies resolvableDependencies) {
+	}
 
 
 	// -------------------------------------------------------------------------------------------------------------
