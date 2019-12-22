@@ -44,7 +44,7 @@ public class GradleBukkit implements Plugin<Project> {
 			}
 		});
 
-		target.getTasks().getByName("assemble", new Closure(this) {
+		target.getTasks().getByName("jar", new Closure(this) {
 			public void doCall(Task task) {
 				task.dependsOn(generateBukkitManifest);
 			}
