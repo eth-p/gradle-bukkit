@@ -49,6 +49,8 @@ bukkit {
 }
 ```
 
+For a working "hello world" plugin that uses Gradle for Bukkit, check out [https://github.com/eth-p/bukkit-example](https://github.com/eth-p/bukkit-example).
+
 
 ## Dependency Functions
 
