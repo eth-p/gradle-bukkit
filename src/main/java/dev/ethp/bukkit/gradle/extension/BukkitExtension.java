@@ -376,6 +376,13 @@ public class BukkitExtension {
 		permission(permission);
 	}
 
+	public void permission(String name, Closure closure) {
+		PermissionExtension permission = new PermissionExtension();
+		permission.setName(name);
+		ConfigureUtil.configure(closure, permission);
+		permission(permission);
+	}
+
 	public void permission(String name) {
 		PermissionExtension permission = new PermissionExtension();
 		permission.setName(name);
@@ -424,6 +431,13 @@ public class BukkitExtension {
 		}
 
 		this.commands.add(command);
+	}
+
+	public void command(String name, Closure closure) {
+		CommandExtension command = new CommandExtension();
+		command.setName(name);
+		ConfigureUtil.configure(closure, command);
+		command(command);
 	}
 
 	public void command(Closure closure) {
