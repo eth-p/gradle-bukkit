@@ -1,5 +1,6 @@
 package dev.ethp.bukkit.gradle.function;
 
+import dev.ethp.bukkit.gradle.CommonRepository;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.Dependency;
 import org.gradle.api.artifacts.dsl.DependencyHandler;
@@ -16,8 +17,8 @@ public class VaultApi extends AbstractDependencyFunction {
 	// Constructors
 	// -------------------------------------------------------------------------------------------------------------
 
-	public VaultApi(Project project, Repository repo) {
-		super(project, repo);
+	public VaultApi(Project project) {
+		super(project);
 	}
 
 	// -------------------------------------------------------------------------------------------------------------
@@ -25,8 +26,15 @@ public class VaultApi extends AbstractDependencyFunction {
 	// -------------------------------------------------------------------------------------------------------------
 
 	@Override
-	public Dependency createDependency(DependencyHandler handler) {
+	public Dependency getDependency(DependencyHandler handler) {
 		return handler.create("com.github.MilkBowl:VaultAPI:" + this.version);
+	}
+
+	@Override
+	public CommonRepository[] getRepositories() {
+		return new CommonRepository[]{
+				CommonRepository.JITPACK
+		};
 	}
 
 	public void doCall(String version) {
