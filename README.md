@@ -2,7 +2,7 @@
 A Gradle plugin that helps simplify Bukkit plugin development.
 
 ## Features
-- Define the plugin manifest inside `build.gradle`.
+- Generate the plugin manifest using a `build.gradle` DSL.
 - Easily include common API dependencies.
 
 ## Example
