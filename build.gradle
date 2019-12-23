@@ -1,8 +1,7 @@
 plugins {
 	id 'java'
-//	id 'signing'
-	id 'maven-publish'
 	id 'java-gradle-plugin'
+	id 'com.gradle.plugin-publish' version '0.10.1'
 }
 
 apply from: 'config.gradle'
@@ -16,56 +15,29 @@ dependencies {
 	implementation 'org.yaml:snakeyaml:1.25'
 }
 
-//task sourcesJar(type: Jar, dependsOn: classes) {
-//	classifier = 'sources'
-//	from sourceSets.main.allSource
-//}
-//
-//task javadocJar(type: Jar) {
-//	classifier = 'javadoc'
-//	from groovydoc
-//}
-//
-//publishing {
-//	publications {
-//		maven(MavenPublication) {
-//			groupId = 'dev.ethp.bukkit'
-//			artifactId = 'dev.ethp.bukkit.gradle'
-//			version = meta.version
-//
-//			from components.java
-//
-//			versionMapping {
-//				usage('java-api') {
-//					fromResolutionOf('runtimeClasspath')
-//				}
-//				usage('java-runtime') {
-//					fromResolutionResult()
-//				}
-//			}
-//		}
-//	}
-//
-//	repositories {
-//		mavenLocal()
-//	}
-//}
-
+// Custom plugin:
 gradlePlugin {
 	plugins {
-		customPlugin {
-			id = meta.group
+		gradleBukkit {
+			id = meta.id
 			implementationClass = 'dev.ethp.bukkit.gradle.GradleBukkit'
+			displayName = 'Bukkit for Gradle'
+			description = 'A Gradle plugin that helps simplify Bukkit plugin development.'
 		}
 	}
 }
 
-//signing {
-//	sign publishing.publications.maven
-//}
+// Publish plugin:
+pluginBundle {
+	website = meta.github
+	vcsUrl = "${meta.github}.git"
+	tags = ['minecraft', 'bukkit', 'spigot']
+}
 
-sourceCompatibility = '1.8'
-targetCompatibility = '1.8'
+// Java configuration.
+sourceCompatibility = meta.java
+targetCompatibility = meta.java
 
+// Project configuration.
 group = meta.group
 version = meta.version
