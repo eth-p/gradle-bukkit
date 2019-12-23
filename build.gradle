@@ -21,7 +21,7 @@ gradlePlugin {
 		gradleBukkit {
 			id = meta.id
 			implementationClass = 'dev.ethp.bukkit.gradle.GradleBukkit'
-			displayName = 'Bukkit for Gradle'
+			displayName = 'Gradle for Bukkit'
 			description = 'A Gradle plugin that helps simplify Bukkit plugin development.'
 		}
 	}

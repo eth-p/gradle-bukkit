@@ -20,6 +20,10 @@ public class PermissionExtension {
 	public static final PermissionValue NOT_OP = PermissionValue.PLAYER;
 	public static final PermissionValue NOT_OPERATOR = PermissionValue.PLAYER;
 	public static final PermissionValue ALL = PermissionValue.ALL;
+	public static final PermissionValue NONE = PermissionValue.NONE;
+
+	public static final ChildPermissionInheritance INHERIT = ChildPermissionInheritance.INHERIT;
+	public static final ChildPermissionInheritance INVERT = ChildPermissionInheritance.INVERT;
 
 
 	// -------------------------------------------------------------------------------------------------------------

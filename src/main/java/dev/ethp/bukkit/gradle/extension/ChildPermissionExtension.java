@@ -8,7 +8,7 @@ public class ChildPermissionExtension {
 	// Constants
 	// -------------------------------------------------------------------------------------------------------------
 
-	public static final ChildPermissionInheritance INERHIT = ChildPermissionInheritance.INHERIT;
+	public static final ChildPermissionInheritance INHERIT = ChildPermissionInheritance.INHERIT;
 	public static final ChildPermissionInheritance INVERT = ChildPermissionInheritance.INVERT;
 
 
