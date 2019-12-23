@@ -68,7 +68,7 @@ public enum PermissionValue {
 
 	/**
 	 * Gets a PermissionValue that corresponds to a specific mask.
-	 * It would be advisable to use {@link mask & ALL.getMask()} to ensure it falls into a correct range.
+	 * It would be advisable to use {@code mask & ALL.getMask()} to ensure it falls into a correct range.
 	 *
 	 * @param mask The permission mask.
 	 * @return The corresponding permission value.
