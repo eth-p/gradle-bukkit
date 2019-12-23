@@ -89,8 +89,8 @@ public class BukkitExtension {
 	//
 	// bukkit {
 	//     ...
-	//     description 'My awesome plugin.'
-	//     description = 'My awesome plugin.'
+	//     version '1.0'
+	//     version = '1.0'
 	// }
 	// -------------------------------------------------------------------------------------------------------------
 
