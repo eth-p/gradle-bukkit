@@ -4,7 +4,6 @@ import groovy.lang.Closure;
 
 import dev.ethp.bukkit.gradle.extension.BukkitExtension;
 
-import dev.ethp.bukkit.gradle.function.AbstractDependencyFunction;
 import dev.ethp.bukkit.gradle.function.AbstractDependencyFunction.Repository;
 import dev.ethp.bukkit.gradle.function.BukkitApi;
 import dev.ethp.bukkit.gradle.function.SpigotApi;
@@ -14,6 +13,7 @@ import dev.ethp.bukkit.gradle.task.*;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
+import org.gradle.api.plugins.JavaPlugin;
 
 public class GradleBukkit implements Plugin<Project> {
 
@@ -43,15 +43,13 @@ public class GradleBukkit implements Plugin<Project> {
 		// Add hooks:
 		target.afterEvaluate(new ValidateExtensions(target));
 
-		target.getTasks().getByName("check", new Closure(this) {
-			public void doCall(Task task) {
-				task.dependsOn(checkBukkitManifest);
-			}
-		});
-
-		target.getTasks().getByName("jar", new Closure(this) {
-			public void doCall(Task task) {
-				task.dependsOn(generateBukkitManifest);
+		// Add task hooks:
+		target.getPlugins().whenPluginAdded(new Closure(this) {
+			public void doCall(Plugin plugin) {
+				if (plugin instanceof JavaPlugin) {
+					target.getTasks().getByName("check").dependsOn(checkBukkitManifest);
+					target.getTasks().getByName("jar").dependsOn(generateBukkitManifest);
+				}
 			}
 		});
 	}
