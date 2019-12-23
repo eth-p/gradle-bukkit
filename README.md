@@ -9,7 +9,7 @@ A Gradle plugin that helps simplify Bukkit plugin development.
 ```groovy
 plugins {
     id 'java'
-    id 'dev.eth-p.bukkit'
+    id 'dev.ethp.bukkit' version '0.1.1'
 }
 
 dependencies {
