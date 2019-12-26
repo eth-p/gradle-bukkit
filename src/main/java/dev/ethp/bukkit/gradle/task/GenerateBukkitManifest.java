@@ -45,6 +45,7 @@ public class GenerateBukkitManifest extends AbstractTask {
 		put(map, "prefix", Optional.ofNullable(extension.getLogger()).map(LoggerExtension::getPrefix));
 		put(map, "database", Optional.ofNullable(extension.getApi().getDatabaseSupport()));
 		put(map, "loadbefore", Optional.ofNullable(extension.getDeferredPlugins()));
+		put(map, "api-version", Optional.ofNullable(extension.getApi().getManifestVersion()));
 	}
 
 	protected void addDependencies(Map<String, Object> map, BukkitExtension extension) {
