@@ -7,6 +7,7 @@ import dev.ethp.bukkit.gradle.extension.BukkitExtension;
 import dev.ethp.bukkit.gradle.function.BukkitApi;
 import dev.ethp.bukkit.gradle.function.SpigotApi;
 import dev.ethp.bukkit.gradle.function.VaultApi;
+import dev.ethp.bukkit.gradle.function.PaperApi;
 import dev.ethp.bukkit.gradle.hook.ValidateExtensions;
 import dev.ethp.bukkit.gradle.task.*;
 import org.gradle.api.Plugin;
@@ -31,6 +32,7 @@ public class GradleBukkit implements Plugin<Project> {
 		// Add dependency functions:
 		target.getExtensions().add("bukkitApi", new BukkitApi(target));
 		target.getExtensions().add("spigotApi", new SpigotApi(target));
+		target.getExtensions().add("paperApi", new PaperApi(target));
 		target.getExtensions().add("vaultApi", new VaultApi(target));
 
 		// Add maven central repository:

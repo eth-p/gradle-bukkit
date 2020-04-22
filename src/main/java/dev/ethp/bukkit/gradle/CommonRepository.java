@@ -20,6 +20,7 @@ public class CommonRepository {
 	// Constants
 	// -------------------------------------------------------------------------------------------------------------
 
+	public static final CommonRepository PAPER = new CommonRepository("papermc", "https://papermc.io/repo/repository/maven-public/");
 	public static final CommonRepository SPIGOT = new CommonRepository("spigot-repo", "https://hub.spigotmc.org/nexus/content/repositories/snapshots/");
 	public static final CommonRepository JITPACK = new CommonRepository("jitpack", "https://jitpack.io/");
 	public static final CommonRepository SONATYPE = new CommonRepository("sonatype", "https://oss.sonatype.org/content/repositories/snapshots/");
