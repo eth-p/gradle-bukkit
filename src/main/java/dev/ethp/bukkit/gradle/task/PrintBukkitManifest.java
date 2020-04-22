@@ -35,6 +35,11 @@ public class PrintBukkitManifest extends AbstractTask {
 	@Override
 	void exec() {
 		this.printHeader("Plugin Manifest:");
+		if (extension.getTemplate()) {
+			this.printInfo("This is a template. plugin.yml will not be generated.");
+			this.printSpacer();
+		}
+
 		this.printProperty("name", Optional.ofNullable(extension.getName()));
 		this.printProperty("version", Optional.ofNullable(extension.getVersion()));
 		this.printSpacer();

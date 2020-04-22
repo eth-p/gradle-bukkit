@@ -120,11 +120,12 @@ public class BukkitExtension {
 	// Required.
 	//
 	// The main class of the plugin.
+	// If provided, this will disable the 'template' property.
 	//
 	// bukkit {
 	//     ...
 	//     main 'com.example.bukkit.BukkitPlugin'
-	//     mainClass = 'My awesome plugin.'
+	//     mainClass = 'com.example.bukkit.BukkitPlugin'
 	// }
 	// -------------------------------------------------------------------------------------------------------------
 
@@ -136,7 +137,9 @@ public class BukkitExtension {
 
 	public void setMainClass(String mainClass) {
 		if (mainClass == null) throw new InvalidUserDataException("Plugin main class cannot be null.");
+
 		this.mainClass = mainClass;
+		this.setTemplate(false);
 	}
 
 	public void mainClass(String mainClass) {
@@ -594,5 +597,35 @@ public class BukkitExtension {
 		setLoadAt(type);
 	}
 
+
+
+	// -------------------------------------------------------------------------------------------------------------
+	// PROPERTY: template
+	// Optional.
+	//
+	// Specifies that this should be treated as a template.
+	// This prevents verification of certain attributes and disables plugin.yml generation.
+	//
+	// If the main class is specified, this will be disabled.
+	//
+	// bukkit {
+	//     ...
+	//     template()
+	// }
+	// -------------------------------------------------------------------------------------------------------------
+
+	private boolean template;
+
+	public boolean getTemplate() {
+		return this.template;
+	}
+
+	public void setTemplate(boolean template) {
+		this.template = template;
+	}
+
+	public void template() {
+		this.template = true;
+	}
 
 }

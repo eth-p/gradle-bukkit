@@ -62,6 +62,8 @@ public class CheckBukkitManifest extends AbstractTask {
 
 	@Override
 	void exec() {
+		if (extension.getTemplate()) return;
+
 		boolean failure = false;
 
 		// Checks:
