@@ -1,5 +1,5 @@
 plugins {
-	id 'java'
+	id 'java-library'
 	id 'java-gradle-plugin'
 	id 'com.gradle.plugin-publish' version '0.11.0'
 }
@@ -8,11 +8,17 @@ apply from: 'config.gradle'
 
 repositories {
 	mavenCentral()
+	maven {
+		url 'https://plugins.gradle.org/m2/'
+	}
 }
 
 dependencies {
 	implementation gradleApi()
 	implementation 'org.yaml:snakeyaml:1.25'
+
+	// 'shadow' transformer
+	compileOnly 'com.github.jengelman.gradle.plugins:shadow:5.2.0'
 }
 
 // Custom plugin:

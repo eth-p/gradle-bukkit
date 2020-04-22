@@ -2,7 +2,6 @@ package dev.ethp.bukkit.gradle.task;
 
 import java.io.File;
 
-import org.gradle.api.InvalidUserDataException;
 import org.gradle.api.tasks.Internal;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.SourceSetContainer;

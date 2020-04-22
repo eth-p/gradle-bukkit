@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import dev.ethp.bukkit.gradle.extension.*;
 import org.gradle.api.tasks.Internal;
