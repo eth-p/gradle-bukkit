@@ -9,7 +9,7 @@ A Gradle plugin that helps simplify Bukkit plugin development.
 ```groovy
 plugins {
     id 'java'
-    id 'dev.ethp.bukkit' version '0.1.3'
+    id 'dev.ethp.bukkit' version '0.1.6'
 }
 
 dependencies {
@@ -60,6 +60,7 @@ The following APIs are supported:
 
 |API|Function|
 |:--|:--|
+|Paper\*|`paperApi()`|
 |Spigot\*|`spigotApi()`|
 |Bukkit\*|`bukkitApi()`|
 |Vault|`vaultApi('version')`|
