@@ -5,7 +5,6 @@ import java.net.URL;
 
 import groovy.lang.Closure;
 
-import dev.ethp.bukkit.gradle.function.AbstractDependencyFunction;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.repositories.ArtifactRepository;
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository;
@@ -24,6 +23,7 @@ public class CommonRepository {
 	public static final CommonRepository SPIGOT = new CommonRepository("spigot-repo", "https://hub.spigotmc.org/nexus/content/repositories/snapshots/");
 	public static final CommonRepository JITPACK = new CommonRepository("jitpack", "https://jitpack.io/");
 	public static final CommonRepository SONATYPE = new CommonRepository("sonatype", "https://oss.sonatype.org/content/repositories/snapshots/");
+	public static final CommonRepository PLACEHOLDERAPI = new CommonRepository("placeholderapi", "https://repo.extendedclip.com/content/repositories/placeholderapi/");
 
 	// -------------------------------------------------------------------------------------------------------------
 	// Fields

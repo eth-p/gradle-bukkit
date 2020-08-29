@@ -4,10 +4,7 @@ import groovy.lang.Closure;
 
 import dev.ethp.bukkit.gradle.extension.BukkitExtension;
 
-import dev.ethp.bukkit.gradle.function.BukkitApi;
-import dev.ethp.bukkit.gradle.function.SpigotApi;
-import dev.ethp.bukkit.gradle.function.VaultApi;
-import dev.ethp.bukkit.gradle.function.PaperApi;
+import dev.ethp.bukkit.gradle.function.*;
 import dev.ethp.bukkit.gradle.hook.ValidateExtensions;
 import dev.ethp.bukkit.gradle.task.*;
 import org.gradle.api.Plugin;
@@ -34,6 +31,7 @@ public class GradleBukkit implements Plugin<Project> {
 		target.getExtensions().add("spigotApi", new SpigotApi(target));
 		target.getExtensions().add("paperApi", new PaperApi(target));
 		target.getExtensions().add("vaultApi", new VaultApi(target));
+		target.getExtensions().add("placeholderApi", new PlaceholderApi(target));
 
 		// Add maven central repository:
 		target.getRepositories().mavenCentral();
