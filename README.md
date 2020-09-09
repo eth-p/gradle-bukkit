@@ -13,7 +13,7 @@ If you would prefer to start from scratch, the following build.gradle file will 
 ```groovy
 plugins {
     id 'java'
-    id 'dev.ethp.bukkit' version '0.1.10'
+    id 'dev.ethp.bukkit' version '0.2'
 }
 
 dependencies {
@@ -80,7 +80,11 @@ The following APIs are supported:
 |[ACF](https://www.spigotmc.org/threads/acf-beta-annotation-command-framework.234266/#post-2366730)|`libACF()`|
 
 
-## Gradle DSL
+## Documentation
+
+**DSL:**  
+Documentation of Gradle for Bukkit DSL. 
+Examples use the Groovy DSL, but the Kotlin DSL should also work.
 
 - [Bukkit DSL](./doc/dsl/bukkit.md)
 - [Bukkit API DSL](./doc/dsl/bukkit-api.md)
@@ -88,6 +92,11 @@ The following APIs are supported:
 - [Command DSL](./doc/dsl/command.md)
 - [Dependency DSL](./doc/dsl/dependency.md)
 - [Permission DSL](./doc/dsl/permission.md)
+
+**Resources:**  
+Other documentation that might be useful.
+
+- [Shadow Transformer](./doc/shadow.md)
 
 
 ## Alternatives
