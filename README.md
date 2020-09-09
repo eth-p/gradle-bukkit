@@ -13,7 +13,7 @@ If you would prefer to start from scratch however, the following build.gradle fi
 ```groovy
 plugins {
     id 'java'
-    id 'dev.ethp.bukkit' version '0.2'
+    id 'dev.ethp.bukkit' version '0.2.1'
 }
 
 dependencies {
