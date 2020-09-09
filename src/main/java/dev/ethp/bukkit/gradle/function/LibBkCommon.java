@@ -1,17 +1,14 @@
 package dev.ethp.bukkit.gradle.function;
 
+import dev.ethp.bukkit.gradle.AbstractDependencyFunction;
 import dev.ethp.bukkit.gradle.CommonRepository;
 import org.gradle.api.Project;
-import org.gradle.api.artifacts.Dependency;
-import org.gradle.api.artifacts.dsl.DependencyHandler;
+
+import static dev.ethp.bukkit.gradle.AbstractDependencyFunction.Dependency.*;
 
 public class LibBkCommon extends AbstractDependencyFunction {
 
-	// -------------------------------------------------------------------------------------------------------------
-	// Fields
-	// -------------------------------------------------------------------------------------------------------------
-
-	private String version;
+	static public String FUNCTION = "libBkCommon";
 
 	// -------------------------------------------------------------------------------------------------------------
 	// Constructors
@@ -26,8 +23,10 @@ public class LibBkCommon extends AbstractDependencyFunction {
 	// -------------------------------------------------------------------------------------------------------------
 
 	@Override
-	public Dependency getDependency(DependencyHandler handler) {
-		return handler.create("com.github.bergerhealer:BKCommonLib:" + this.version);
+	public Dependency[] getDependency() {
+		return new Dependency[]{
+				compileOnly("com.github.bergerhealer:BKCommonLib:" + this.getVersion()),
+		};
 	}
 
 	@Override
@@ -37,14 +36,9 @@ public class LibBkCommon extends AbstractDependencyFunction {
 		};
 	}
 
-	public void doCall(String version) {
-		this.version = version;
-		this.inject();
-	}
-
-	public void doCall() {
-		this.version = "master-SNAPSHOT";
-		this.inject();
+	@Override
+	protected String getDefaultVersion() {
+		return "master-SNAPSHOT";
 	}
 
 }

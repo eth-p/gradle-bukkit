@@ -1,17 +1,14 @@
 package dev.ethp.bukkit.gradle.function;
 
+import dev.ethp.bukkit.gradle.AbstractDependencyFunction;
 import dev.ethp.bukkit.gradle.CommonRepository;
 import org.gradle.api.Project;
-import org.gradle.api.artifacts.Dependency;
-import org.gradle.api.artifacts.dsl.DependencyHandler;
+
+import static dev.ethp.bukkit.gradle.AbstractDependencyFunction.Dependency.*;
 
 public class PlaceholderApi extends AbstractDependencyFunction {
-
-	// -------------------------------------------------------------------------------------------------------------
-	// Fields
-	// -------------------------------------------------------------------------------------------------------------
-
-	private String version;
+	
+	static public String FUNCTION = "placeholderApi";
 
 	// -------------------------------------------------------------------------------------------------------------
 	// Constructors
@@ -26,8 +23,10 @@ public class PlaceholderApi extends AbstractDependencyFunction {
 	// -------------------------------------------------------------------------------------------------------------
 
 	@Override
-	public Dependency getDependency(DependencyHandler handler) {
-		return handler.create("me.clip:placeholderapi:" + this.version);
+	public Dependency[] getDependency() {
+		return new Dependency[]{
+				compileOnly("me.clip:placeholderapi:" + this.getVersion()),
+		};
 	}
 
 	@Override
@@ -36,15 +35,10 @@ public class PlaceholderApi extends AbstractDependencyFunction {
 				CommonRepository.PLACEHOLDERAPI
 		};
 	}
-
-	public void doCall(String version) {
-		this.version = version;
-		this.inject();
+	
+	@Override
+	protected String getDefaultVersion() {
+		return "2.10.9";
 	}
-
-	public void doCall() {
-		this.version = "2.10.9";
-		this.inject();
-	}
-
+	
 }

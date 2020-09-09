@@ -1,11 +1,14 @@
 package dev.ethp.bukkit.gradle.function;
 
+import dev.ethp.bukkit.gradle.AbstractDependencyFunction;
 import dev.ethp.bukkit.gradle.CommonRepository;
 import org.gradle.api.Project;
-import org.gradle.api.artifacts.Dependency;
-import org.gradle.api.artifacts.dsl.DependencyHandler;
+
+import static dev.ethp.bukkit.gradle.AbstractDependencyFunction.Dependency.*;
 
 public class PaperApi extends AbstractDependencyFunction {
+
+	static public String FUNCTION = "paperApi";
 
 	// -------------------------------------------------------------------------------------------------------------
 	// Constructors
@@ -20,8 +23,10 @@ public class PaperApi extends AbstractDependencyFunction {
 	// -------------------------------------------------------------------------------------------------------------
 
 	@Override
-	public Dependency getDependency(DependencyHandler handler) {
-		return handler.create("com.destroystokyo.paper:paper-api:" + this.getExtension().getApi().getLibraryVersion());
+	public Dependency[] getDependency() {
+		return new Dependency[]{
+				compileOnly("com.destroystokyo.paper:paper-api:" + this.getVersion()),
+		};
 	}
 
 	@Override
@@ -31,8 +36,9 @@ public class PaperApi extends AbstractDependencyFunction {
 		};
 	}
 
-	public void doCall() {
-		this.inject();
+	@Override
+	public String getDefaultVersion() {
+		return this.getExtension().getApi().getLibraryVersion();
 	}
 
 }

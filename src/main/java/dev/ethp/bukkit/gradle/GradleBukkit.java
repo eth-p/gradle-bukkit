@@ -27,12 +27,15 @@ public class GradleBukkit implements Plugin<Project> {
 		Task generateBukkitManifest = target.getTasks().create(GenerateBukkitManifest.NAME, GenerateBukkitManifest.class);
 
 		// Add dependency functions:
-		target.getExtensions().add("bukkitApi", new BukkitApi(target));
-		target.getExtensions().add("spigotApi", new SpigotApi(target));
-		target.getExtensions().add("paperApi", new PaperApi(target));
-		target.getExtensions().add("vaultApi", new VaultApi(target));
-		target.getExtensions().add("placeholderApi", new PlaceholderApi(target));
-		target.getExtensions().add("libBkCommon", new LibBkCommon(target));
+		addDependencyFunction(target, BukkitApi.class);
+		addDependencyFunction(target, SpigotApi.class);
+		addDependencyFunction(target, PaperApi.class);
+
+		addDependencyFunction(target, VaultApi.class);
+		addDependencyFunction(target, PlaceholderApi.class);
+
+		addDependencyFunction(target, LibBkCommon.class);
+		addDependencyFunction(target, LibACF.class);
 
 		// Add maven central repository:
 		target.getRepositories().mavenCentral();
@@ -49,6 +52,24 @@ public class GradleBukkit implements Plugin<Project> {
 				}
 			}
 		});
+	}
+
+	private void addDependencyFunction(Project target, Class<? extends AbstractDependencyFunction> function) {
+		try {
+			String identifier = (String) function.getField("FUNCTION").get(null);
+			AbstractDependencyFunction instance = (AbstractDependencyFunction) function.getConstructor(Project.class).newInstance(target);
+
+			target.getExtensions().add(identifier, instance);
+			target.afterEvaluate(new Closure(this) {
+				public void doCall() {
+					if (instance.isConfigured() && !instance.isInjected()) {
+						instance.inject();
+					}
+				}
+			});
+		} catch (Exception e) {
+			throw new RuntimeException("Invalid gradle-bukkit dependency function.", e);
+		}
 	}
 
 }

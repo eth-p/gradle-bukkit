@@ -1,12 +1,15 @@
 package dev.ethp.bukkit.gradle.function;
 
+import dev.ethp.bukkit.gradle.AbstractDependencyFunction;
 import dev.ethp.bukkit.gradle.CommonRepository;
 import org.gradle.api.Project;
-import org.gradle.api.artifacts.Dependency;
-import org.gradle.api.artifacts.dsl.DependencyHandler;
+
+import static dev.ethp.bukkit.gradle.AbstractDependencyFunction.Dependency.*;
 
 public class VaultApi extends AbstractDependencyFunction {
 
+	static public String FUNCTION = "vaultApi";
+	
 	// -------------------------------------------------------------------------------------------------------------
 	// Fields
 	// -------------------------------------------------------------------------------------------------------------
@@ -26,8 +29,10 @@ public class VaultApi extends AbstractDependencyFunction {
 	// -------------------------------------------------------------------------------------------------------------
 
 	@Override
-	public Dependency getDependency(DependencyHandler handler) {
-		return handler.create("com.github.MilkBowl:VaultAPI:" + this.version);
+	public Dependency[] getDependency() {
+		return new Dependency[]{
+				compileOnly("com.github.MilkBowl:VaultAPI:" + this.getVersion()),
+		};
 	}
 
 	@Override
@@ -37,14 +42,9 @@ public class VaultApi extends AbstractDependencyFunction {
 		};
 	}
 
-	public void doCall(String version) {
-		this.version = version;
-		this.inject();
-	}
-
-	public void doCall() {
-		this.version = "1.7";
-		this.inject();
+	@Override
+	protected String getDefaultVersion() {
+		return "1.7";
 	}
 
 }

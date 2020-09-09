@@ -1,11 +1,14 @@
 package dev.ethp.bukkit.gradle.function;
 
+import dev.ethp.bukkit.gradle.AbstractDependencyFunction;
 import dev.ethp.bukkit.gradle.CommonRepository;
 import org.gradle.api.Project;
-import org.gradle.api.artifacts.Dependency;
-import org.gradle.api.artifacts.dsl.DependencyHandler;
+
+import static dev.ethp.bukkit.gradle.AbstractDependencyFunction.Dependency.*;
 
 public class SpigotApi extends AbstractDependencyFunction {
+
+	static public String FUNCTION = "spigotApi";
 
 	// -------------------------------------------------------------------------------------------------------------
 	// Constructors
@@ -20,8 +23,10 @@ public class SpigotApi extends AbstractDependencyFunction {
 	// -------------------------------------------------------------------------------------------------------------
 
 	@Override
-	public Dependency getDependency(DependencyHandler handler) {
-		return handler.create("org.spigotmc:spigot-api:" + this.getExtension().getApi().getLibraryVersion());
+	public Dependency[] getDependency() {
+		return new Dependency[]{
+				compileOnly("org.spigotmc:spigot-api:" + this.getVersion()),
+		};
 	}
 
 	@Override
@@ -32,8 +37,9 @@ public class SpigotApi extends AbstractDependencyFunction {
 		};
 	}
 
-	public void doCall() {
-		this.inject();
+	@Override
+	public String getDefaultVersion() {
+		return this.getExtension().getApi().getLibraryVersion();
 	}
 
 }
