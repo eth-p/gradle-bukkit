@@ -29,7 +29,7 @@ public class LibBkCommon extends AbstractDependencyFunction {
 	public DependencySpec[] getDependencies() {
 		return new DependencySpec[]{
 				compileOnly(new RemoteDependency(
-						"https://ci.mg-dev.eu/job/BKCommonLib/lastSuccessfulBuild/artifact/target/BKCommonLib-1.16.2-v2-SNAPSHOT.jar"
+						"https://ci.mg-dev.eu/job/BKCommonLib/" + this.getVersion() + "/artifact/target/BKCommonLib-1.16.2-v2-SNAPSHOT.jar"
 				)),
 		};
 	}
@@ -43,7 +43,7 @@ public class LibBkCommon extends AbstractDependencyFunction {
 
 	@Override
 	protected String getDefaultVersion() {
-		return "084534104dc924f84132a661218039796b8c6960";
+		return "899";
 	}
 
 }
