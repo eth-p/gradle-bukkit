@@ -32,6 +32,7 @@ public class GradleBukkit implements Plugin<Project> {
 		target.getExtensions().add("paperApi", new PaperApi(target));
 		target.getExtensions().add("vaultApi", new VaultApi(target));
 		target.getExtensions().add("placeholderApi", new PlaceholderApi(target));
+		target.getExtensions().add("libBkCommon", new LibBkCommon(target));
 
 		// Add maven central repository:
 		target.getRepositories().mavenCentral();
