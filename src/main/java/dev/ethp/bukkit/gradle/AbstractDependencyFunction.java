@@ -5,14 +5,12 @@ import java.util.List;
 
 import groovy.lang.Closure;
 
+import dev.ethp.bukkit.gradle.dependency.DependencySpec;
 import dev.ethp.bukkit.gradle.extension.BukkitExtension;
 import org.gradle.api.InvalidUserDataException;
 import org.gradle.api.Project;
-import org.gradle.api.artifacts.Dependency;
 import org.gradle.api.artifacts.DependencyResolutionListener;
-import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.artifacts.ResolvableDependencies;
-import org.gradle.api.artifacts.dsl.DependencyHandler;
 
 public abstract class AbstractDependencyFunction extends Closure<Project> {
 
@@ -56,7 +54,7 @@ public abstract class AbstractDependencyFunction extends Closure<Project> {
 	protected void configured() {
 		this.injectWanted = true;
 	}
-	
+
 	/**
 	 * Called when the dependency should be injected.
 	 */
@@ -79,7 +77,7 @@ public abstract class AbstractDependencyFunction extends Closure<Project> {
 		Arrays.asList(this.getRepositories()).forEach(repo -> repo.inject(project));
 		project.getGradle().addListener(new AbstractDependencyInjector(
 				this.getProject(),
-				Arrays.asList(this.getDependency())
+				Arrays.asList(this.getDependencies())
 		));
 
 		this.onInject();
@@ -111,10 +109,11 @@ public abstract class AbstractDependencyFunction extends Closure<Project> {
 
 	/**
 	 * Creates the dependency objects to add.
+	 *
 	 * @return An array of dependencies to add.
 	 */
-	protected abstract Dependency[] getDependency();
-	
+	protected abstract DependencySpec[] getDependencies();
+
 	/**
 	 * Gets the repositories that this dependency requires.
 	 *
@@ -124,39 +123,10 @@ public abstract class AbstractDependencyFunction extends Closure<Project> {
 
 	/**
 	 * Gets the default version of this dependency.
+	 *
 	 * @return The default version.
 	 */
 	protected abstract String getDefaultVersion();
-
-	// -------------------------------------------------------------------------------------------------------------
-	// Classes
-	// -------------------------------------------------------------------------------------------------------------
-
-	/**
-	 * A class that contains information about a dependency that needs to be injected.
-	 */
-	public static class Dependency {
-
-		public final String configuration;
-		public final String artifact;
-
-		private Dependency(String configuration, String artifact) {
-			this.configuration = configuration;
-			this.artifact = artifact;
-		}
-
-		/**
-		 * Creates a dependency that is only used for compiler symbols.
-		 * This dependency will not be included at runtime.
-		 *
-		 * @param artifact The dependency notation string.
-		 * @return The dependency object.
-		 */
-		static public Dependency compileOnly(String artifact) {
-			return new Dependency("compileOnly", artifact);
-		}
-
-	}
 
 	// -------------------------------------------------------------------------------------------------------------
 	// Default
@@ -213,23 +183,19 @@ public abstract class AbstractDependencyFunction extends Closure<Project> {
 class AbstractDependencyInjector implements DependencyResolutionListener {
 
 	private final Project project;
-	private final List<AbstractDependencyFunction.Dependency> dependencies;
+	private final List<DependencySpec> dependencies;
 
-	public AbstractDependencyInjector(Project project, List<AbstractDependencyFunction.Dependency> dependencies) {
+	public AbstractDependencyInjector(Project project, List<DependencySpec> dependencies) {
 		this.project = project;
 		this.dependencies = dependencies;
 	}
 
 	@Override
 	public void beforeResolve(ResolvableDependencies resolvableDependencies) {
-		DependencyHandler handler = this.project.getDependencies();
-		
-		for (AbstractDependencyFunction.Dependency dependencySpec : this.dependencies) {
-			DependencySet dependencySet = this.project.getConfigurations().getByName(dependencySpec.configuration).getDependencies();
-			Dependency dependency = handler.create(dependencySpec.artifact);
-			dependencySet.add(dependency);
+		for (DependencySpec dependencySpec : this.dependencies) {
+			dependencySpec.inject(project);
 		}
-		
+
 		this.project.getGradle().removeListener(this);
 	}
 

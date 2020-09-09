@@ -59,7 +59,9 @@ For a working "hello world" plugin that uses Gradle for Bukkit, check out [https
 ## Dependency Functions
 
 Gradle for Bukkit is capable of automatically resolving common plugin APIs.
-All you need to do is call the function inside the `build.gradle` dependency block.
+All you need to do is call the function inside the `build.gradle` dependency block. 
+
+### APIs
 The following APIs are supported:
 
 |API|Function|
@@ -67,11 +69,15 @@ The following APIs are supported:
 |Paper\*|`paperApi()`|
 |Spigot\*|`spigotApi()`|
 |Bukkit\*|`bukkitApi()`|
-|Vault|`vaultApi('version')`|
-|PlaceholderAPI|`placeholderApi()`|
-|BKCommonLib|`libBkCommon()`|
+|[Vault](https://www.spigotmc.org/resources/vault.34315/)|`vaultApi('version')`|
+|[PlaceholderAPI](https://www.spigotmc.org/resources/placeholderapi.6245/)|`placeholderApi()`|
 
 \* The API version used is determined by the API version specified in the `api` DSL block.
+
+### Libraries
+|Library|Function|
+|[BKCommonLib](https://www.spigotmc.org/resources/bkcommonlib.39590/)|`libBkCommon()`|
+|[ACF](https://www.spigotmc.org/threads/acf-beta-annotation-command-framework.234266/#post-2366730)|`libACF()`|
 
 
 ## Gradle DSL

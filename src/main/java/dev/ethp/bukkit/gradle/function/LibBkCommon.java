@@ -2,9 +2,11 @@ package dev.ethp.bukkit.gradle.function;
 
 import dev.ethp.bukkit.gradle.AbstractDependencyFunction;
 import dev.ethp.bukkit.gradle.CommonRepository;
+import dev.ethp.bukkit.gradle.dependency.DependencySpec;
+import dev.ethp.bukkit.gradle.dependency.RemoteDependency;
 import org.gradle.api.Project;
 
-import static dev.ethp.bukkit.gradle.AbstractDependencyFunction.Dependency.*;
+import static dev.ethp.bukkit.gradle.dependency.DependencySpec.*;
 
 public class LibBkCommon extends AbstractDependencyFunction {
 
@@ -23,9 +25,11 @@ public class LibBkCommon extends AbstractDependencyFunction {
 	// -------------------------------------------------------------------------------------------------------------
 
 	@Override
-	public Dependency[] getDependency() {
-		return new Dependency[]{
-				compileOnly("com.github.bergerhealer:BKCommonLib:" + this.getVersion()),
+	public DependencySpec[] getDependencies() {
+		return new DependencySpec[]{
+				compileOnly(new RemoteDependency(
+						"https://ci.mg-dev.eu/job/BKCommonLib/lastSuccessfulBuild/artifact/target/BKCommonLib-1.16.2-v2-SNAPSHOT.jar"
+				)),
 		};
 	}
 
@@ -38,7 +42,7 @@ public class LibBkCommon extends AbstractDependencyFunction {
 
 	@Override
 	protected String getDefaultVersion() {
-		return "master-SNAPSHOT";
+		return "084534104dc924f84132a661218039796b8c6960";
 	}
 
 }

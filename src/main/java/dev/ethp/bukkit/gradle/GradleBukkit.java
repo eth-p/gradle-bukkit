@@ -2,6 +2,7 @@ package dev.ethp.bukkit.gradle;
 
 import groovy.lang.Closure;
 
+import dev.ethp.bukkit.gradle.dependency.RemoteDependency;
 import dev.ethp.bukkit.gradle.extension.BukkitExtension;
 
 import dev.ethp.bukkit.gradle.function.*;
@@ -10,7 +11,11 @@ import dev.ethp.bukkit.gradle.task.*;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
+import org.gradle.api.UnknownTaskException;
 import org.gradle.api.plugins.JavaPlugin;
+import org.gradle.api.tasks.TaskContainer;
+import org.gradle.api.tasks.TaskProvider;
+import org.gradle.internal.logging.text.StyledTextOutputFactory;
 
 public class GradleBukkit implements Plugin<Project> {
 
@@ -18,22 +23,22 @@ public class GradleBukkit implements Plugin<Project> {
 	public void apply(Project target) {
 		// Add extensions:
 		target.getExtensions().create(BukkitExtension.NAME, BukkitExtension.class, target);
+		target.getExtensions().create(RemoteDependency.Extension.NAME, RemoteDependency.Extension.class, target);
 
 		// Add tasks:
-		Task printBukkitManifest = target.getTasks().create(PrintBukkitManifest.NAME, PrintBukkitManifest.class);
-		Task printBukkitCommands = target.getTasks().create(PrintBukkitCommands.NAME, PrintBukkitCommands.class);
-		Task printBukkitPermissions = target.getTasks().create(PrintBukkitPermissions.NAME, PrintBukkitPermissions.class);
-		Task checkBukkitManifest = target.getTasks().create(CheckBukkitManifest.NAME, CheckBukkitManifest.class);
-		Task generateBukkitManifest = target.getTasks().create(GenerateBukkitManifest.NAME, GenerateBukkitManifest.class);
+		TaskProvider<PrintBukkitManifest> printBukkitManifest = target.getTasks().register(PrintBukkitManifest.NAME, PrintBukkitManifest.class);
+		TaskProvider<PrintBukkitCommands> printBukkitCommands = target.getTasks().register(PrintBukkitCommands.NAME, PrintBukkitCommands.class);
+		TaskProvider<PrintBukkitPermissions> printBukkitPermissions = target.getTasks().register(PrintBukkitPermissions.NAME, PrintBukkitPermissions.class);
+		TaskProvider<CheckBukkitManifest> checkBukkitManifest = target.getTasks().register(CheckBukkitManifest.NAME, CheckBukkitManifest.class);
+		TaskProvider<GenerateBukkitManifest> generateBukkitManifest = target.getTasks().register(GenerateBukkitManifest.NAME, GenerateBukkitManifest.class);
+		TaskProvider<DownloadLibraries> downloadLibraries = target.getTasks().register(DownloadLibraries.NAME, DownloadLibraries.class);
 
 		// Add dependency functions:
 		addDependencyFunction(target, BukkitApi.class);
 		addDependencyFunction(target, SpigotApi.class);
 		addDependencyFunction(target, PaperApi.class);
-
 		addDependencyFunction(target, VaultApi.class);
 		addDependencyFunction(target, PlaceholderApi.class);
-
 		addDependencyFunction(target, LibBkCommon.class);
 		addDependencyFunction(target, LibACF.class);
 
@@ -46,14 +51,23 @@ public class GradleBukkit implements Plugin<Project> {
 		// Add task hooks:
 		target.getPlugins().whenPluginAdded(new Closure(this) {
 			public void doCall(Plugin plugin) {
+				TaskContainer tasks = target.getTasks();
+				
 				if (plugin instanceof JavaPlugin) {
-					target.getTasks().getByName("check").dependsOn(checkBukkitManifest);
-					target.getTasks().getByName("jar").dependsOn(generateBukkitManifest);
+					tasks.getByName("check").dependsOn(checkBukkitManifest);
+					tasks.getByName("jar").dependsOn(generateBukkitManifest);
+					tasks.getByName("compileJava").dependsOn(downloadLibraries);
+				}
+				
+				try {
+					tasks.getByName("compileKotlin").dependsOn(downloadLibraries);
+				} catch (UnknownTaskException ex) {
+					// This is fine.
 				}
 			}
 		});
 	}
-
+	
 	private void addDependencyFunction(Project target, Class<? extends AbstractDependencyFunction> function) {
 		try {
 			String identifier = (String) function.getField("FUNCTION").get(null);

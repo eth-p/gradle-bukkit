@@ -27,11 +27,14 @@ public abstract class AbstractTask extends DefaultTask {
 	// -------------------------------------------------------------------------------------------------------------
 
 	public AbstractTask() {
-		getProject().afterEvaluate(new Closure(null) {
-			public void doCall() {
-				AbstractTask.this.extension = AbstractTask.this.getProject().getExtensions().getByType(BukkitExtension.class);
-			}
-		});
+		this.extension = this.getProject().getExtensions().findByType(BukkitExtension.class);
+		if (this.extension == null) {
+			getProject().afterEvaluate(new Closure(null) {
+				public void doCall() {
+					AbstractTask.this.extension = AbstractTask.this.getProject().getExtensions().getByType(BukkitExtension.class);
+				}
+			});
+		}
 	}
 
 	// -------------------------------------------------------------------------------------------------------------

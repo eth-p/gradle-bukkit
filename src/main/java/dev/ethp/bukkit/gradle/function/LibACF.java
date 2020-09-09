@@ -2,10 +2,11 @@ package dev.ethp.bukkit.gradle.function;
 
 import dev.ethp.bukkit.gradle.AbstractDependencyFunction;
 import dev.ethp.bukkit.gradle.CommonRepository;
+import dev.ethp.bukkit.gradle.dependency.DependencySpec;
 import org.gradle.api.InvalidUserDataException;
 import org.gradle.api.Project;
 
-import static dev.ethp.bukkit.gradle.AbstractDependencyFunction.Dependency.*;
+import static dev.ethp.bukkit.gradle.dependency.DependencySpec.*;
 
 public class LibACF extends AbstractDependencyFunction {
 
@@ -24,8 +25,8 @@ public class LibACF extends AbstractDependencyFunction {
 	// -------------------------------------------------------------------------------------------------------------
 
 	@Override
-	public Dependency[] getDependency() {
-		return new Dependency[]{
+	public DependencySpec[] getDependencies() {
+		return new DependencySpec[]{
 				compileOnly("co.aikar:acf-" + this.getPlatform() + ":" + this.getVersion()),
 		};
 	}

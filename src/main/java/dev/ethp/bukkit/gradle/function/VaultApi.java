@@ -2,9 +2,10 @@ package dev.ethp.bukkit.gradle.function;
 
 import dev.ethp.bukkit.gradle.AbstractDependencyFunction;
 import dev.ethp.bukkit.gradle.CommonRepository;
+import dev.ethp.bukkit.gradle.dependency.DependencySpec;
 import org.gradle.api.Project;
 
-import static dev.ethp.bukkit.gradle.AbstractDependencyFunction.Dependency.*;
+import static dev.ethp.bukkit.gradle.dependency.DependencySpec.*;
 
 public class VaultApi extends AbstractDependencyFunction {
 
@@ -29,8 +30,8 @@ public class VaultApi extends AbstractDependencyFunction {
 	// -------------------------------------------------------------------------------------------------------------
 
 	@Override
-	public Dependency[] getDependency() {
-		return new Dependency[]{
+	public DependencySpec[] getDependencies() {
+		return new DependencySpec[]{
 				compileOnly("com.github.MilkBowl:VaultAPI:" + this.getVersion()),
 		};
 	}
