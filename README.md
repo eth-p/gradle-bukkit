@@ -1,15 +1,19 @@
 # Gradle for Bukkit
-A Gradle plugin that helps simplify Bukkit plugin development.
+A small, no-frills Gradle plugin that helps simplify Bukkit plugin development.
 
 ## Features
 - Generate the plugin manifest using a `build.gradle` DSL.
-- Easily include common API dependencies.
+- Easily include common API dependencies (and their repositories).
 
 ## Example
+[We have an example repo that you can fork!](https://github.com/eth-p/bukkit-example)
+
+If you would prefer to start from scratch, the following build.gradle file will get you started:
+
 ```groovy
 plugins {
     id 'java'
-    id 'dev.ethp.bukkit' version '0.1.6'
+    id 'dev.ethp.bukkit' version '0.1.10'
 }
 
 dependencies {
@@ -64,6 +68,8 @@ The following APIs are supported:
 |Spigot\*|`spigotApi()`|
 |Bukkit\*|`bukkitApi()`|
 |Vault|`vaultApi('version')`|
+|PlaceholderAPI|`placeholderApi()`|
+|BKCommonLib|`libBkCommon()`|
 
 \* The API version used is determined by the API version specified in the `api` DSL block.
 
@@ -76,3 +82,8 @@ The following APIs are supported:
 - [Command DSL](./doc/dsl/command.md)
 - [Dependency DSL](./doc/dsl/dependency.md)
 - [Permission DSL](./doc/dsl/permission.md)
+
+
+## Alternatives
+
+- [BukkitGradle](https://github.com/EndlessCodeGroup/BukkitGradle)
