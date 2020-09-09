@@ -115,6 +115,8 @@ public abstract class AbstractDependencyFunction extends Closure<Project> {
 						}
 					}
 				});
+				
+				this.getProject().getTasks().getByName("build").dependsOn("shadowJar");
 			} catch (NoClassDefFoundError | UnknownTaskException err) {
 				System.err.println("Dependency relocation for " + this.getDependencyName() + " is not possible.");
 				System.err.println("Could not find 'com.github.johnrengelman.shadow plugin'.");
