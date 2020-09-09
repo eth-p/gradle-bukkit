@@ -10,6 +10,7 @@ import static dev.ethp.bukkit.gradle.dependency.DependencySpec.*;
 public class VaultApi extends AbstractDependencyFunction {
 
 	static public String FUNCTION = "vaultApi";
+	static public String NAME = "Vault API";
 	
 	// -------------------------------------------------------------------------------------------------------------
 	// Fields

@@ -253,7 +253,7 @@ public abstract class AbstractDependencyFunction extends Closure<Project> {
 	}
 
 	public void setVersion(String version) {
-		if (version == null) throw new InvalidUserDataException("Dependency version cannot be null.");
+		if (version == null) throw new InvalidUserDataException("Bukkit: " + this.getDependencyName() + " version cannot be null.");
 		this.configured();
 		this.version = version;
 	}
@@ -298,7 +298,7 @@ public abstract class AbstractDependencyFunction extends Closure<Project> {
 	}
 
 	public void setRelocate(boolean enabled) {
-		if (enabled && !this.isRelocatable()) throw new RuntimeException("Dependency cannot be relocated.");
+		if (enabled && !this.isRelocatable()) throw new RuntimeException("Bukkit: " + this.getDependencyName() + " cannot be relocated.");
 		this.configured();
 		this.relocate = Optional.of(enabled);
 	}

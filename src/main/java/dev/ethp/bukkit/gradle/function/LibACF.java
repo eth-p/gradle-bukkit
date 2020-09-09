@@ -11,6 +11,7 @@ import static dev.ethp.bukkit.gradle.dependency.DependencySpec.*;
 public class LibACF extends AbstractDependencyFunction {
 
 	static public String FUNCTION = "libACF";
+	static public String NAME = "The Bukkit API";
 
 	// -------------------------------------------------------------------------------------------------------------
 	// Constructors

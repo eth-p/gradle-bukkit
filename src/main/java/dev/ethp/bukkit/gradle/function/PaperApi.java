@@ -10,6 +10,7 @@ import static dev.ethp.bukkit.gradle.dependency.DependencySpec.*;
 public class PaperApi extends AbstractDependencyFunction {
 
 	static public String FUNCTION = "paperApi";
+	static public String NAME = "The Paper API";
 
 	// -------------------------------------------------------------------------------------------------------------
 	// Constructors

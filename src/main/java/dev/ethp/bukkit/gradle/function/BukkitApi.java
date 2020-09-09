@@ -10,6 +10,7 @@ import static dev.ethp.bukkit.gradle.dependency.DependencySpec.*;
 public class BukkitApi extends AbstractDependencyFunction {
 
 	static public String FUNCTION = "bukkitApi";
+	static public String NAME = "The Bukkit API";
 
 	// -------------------------------------------------------------------------------------------------------------
 	// Constructors

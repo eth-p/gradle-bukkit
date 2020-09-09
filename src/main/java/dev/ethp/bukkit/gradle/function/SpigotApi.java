@@ -10,6 +10,7 @@ import static dev.ethp.bukkit.gradle.dependency.DependencySpec.*;
 public class SpigotApi extends AbstractDependencyFunction {
 
 	static public String FUNCTION = "spigotApi";
+	static public String NAME = "The Spigot API";
 
 	// -------------------------------------------------------------------------------------------------------------
 	// Constructors

@@ -11,6 +11,7 @@ import static dev.ethp.bukkit.gradle.dependency.DependencySpec.*;
 public class LibBkCommon extends AbstractDependencyFunction {
 
 	static public String FUNCTION = "libBkCommon";
+	static public String NAME = "BKCommonLib";
 
 	// -------------------------------------------------------------------------------------------------------------
 	// Constructors

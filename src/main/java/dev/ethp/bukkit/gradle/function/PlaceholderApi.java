@@ -10,6 +10,7 @@ import static dev.ethp.bukkit.gradle.dependency.DependencySpec.*;
 public class PlaceholderApi extends AbstractDependencyFunction {
 	
 	static public String FUNCTION = "placeholderApi";
+	static public String NAME = "PlaceholderAPI";
 
 	// -------------------------------------------------------------------------------------------------------------
 	// Constructors
