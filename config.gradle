@@ -4,7 +4,7 @@ ext {
 	meta.id       = 'dev.ethp.bukkit'
 	meta.group    = 'dev.ethp.gradle'
 	meta.name     = 'gradle-bukkit'
-	meta.version  = '0.2.1'
+	meta.version  = '0.2.2'
 
 	meta.github   = 'https://github.com/eth-p/gradle-bukkit'
 
