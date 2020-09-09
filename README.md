@@ -6,9 +6,9 @@ A small, no-frills Gradle plugin that helps simplify Bukkit plugin development.
 - Easily include common API dependencies (and their repositories).
 
 ## Example
-[We have an example repo that you can fork!](https://github.com/eth-p/bukkit-example)
+For a working "hello world" plugin that uses Gradle for Bukkit, check out [https://github.com/eth-p/bukkit-example](https://github.com/eth-p/bukkit-example).
 
-If you would prefer to start from scratch, the following build.gradle file will get you started:
+If you would prefer to start from scratch however, the following build.gradle file will get you started:
 
 ```groovy
 plugins {
@@ -52,8 +52,6 @@ bukkit {
     dependency 'WorldEdit', REQUIRED
 }
 ```
-
-For a working "hello world" plugin that uses Gradle for Bukkit, check out [https://github.com/eth-p/bukkit-example](https://github.com/eth-p/bukkit-example).
 
 
 ## Dependency Functions
