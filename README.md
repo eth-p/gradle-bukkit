@@ -1,6 +1,9 @@
 # Gradle for Bukkit
 A small, no-frills Gradle plugin that helps simplify Bukkit plugin development.
 
+*Gradle version required:* `5.3`  
+*Gradle version tested:* `6.6.1`
+
 ## Features
 - Generate the plugin manifest using a `build.gradle` DSL.
 - Easily include common API dependencies (and their repositories).
