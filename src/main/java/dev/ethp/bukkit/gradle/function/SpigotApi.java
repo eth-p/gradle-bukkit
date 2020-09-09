@@ -40,6 +40,11 @@ public class SpigotApi extends AbstractDependencyFunction {
 	}
 
 	@Override
+	protected String[] getPluginDependencies() {
+		return new String[0];
+	}
+
+	@Override
 	public String getDefaultVersion() {
 		return this.getExtension().getApi().getLibraryVersion();
 	}

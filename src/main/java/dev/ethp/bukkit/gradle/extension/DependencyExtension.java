@@ -11,6 +11,42 @@ public class DependencyExtension {
 	public static final DependencyType REQUIRED = DependencyType.REQUIRED;
 	public static final DependencyType OPTIONAL = DependencyType.OPTIONAL;
 
+	
+	// -------------------------------------------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------------------------------------------
+
+	public DependencyExtension() {
+	}
+
+	/**
+	 * Internal constructor.
+	 * @param name The dependency name.
+	 * @param type The dependency type.
+	 * @param injected Whether the dependency was injected. 
+	 */
+	private DependencyExtension(String name, DependencyType type, boolean injected) {
+		this.name = name;
+		this.type = type;
+		this.injected = injected;
+	}
+	
+	static public DependencyExtension injected(String name) {
+		return new DependencyExtension(name, DependencyType.REQUIRED, true);
+	}
+
+	// -------------------------------------------------------------------------------------------------------------
+	// PROPERTY: injected
+	// INTERNAL.
+	// -------------------------------------------------------------------------------------------------------------
+
+	private boolean injected = false;
+
+	public boolean isInjected() {
+		return this.injected;
+	}
+
+
 
 	// -------------------------------------------------------------------------------------------------------------
 	// PROPERTY: name

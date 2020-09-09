@@ -39,6 +39,11 @@ public class LibACF extends AbstractDependencyFunction {
 	}
 
 	@Override
+	protected String[] getPluginDependencies() {
+		return new String[0];
+	}
+
+	@Override
 	protected String getDefaultVersion() {
 		return "0.5.0-SNAPSHOT";
 	}

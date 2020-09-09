@@ -1,13 +1,15 @@
 # Dependency Function DSL
 
-Dependencies can be quickly added to a project using one of the available dependency functions listed on the main project page. The DSL for them is a little quirky, unfortunately.
+Dependencies can be quickly added to a project using one of the available dependency functions listed on the main project page.
+
+When added this way, a required dependency will automatically be added to the `plugin.yml`. If you need an optional dependency instead, you can manually specify the dependency in the `bukkit` DSL block.
 
 
 
 ## Function DSL
 
 The simplest way to use a dependency function is to call it from within the `dependencies` block.
-When used this way, the an appropriate version of the dependency is selected for you. 
+When used this way, an appropriate version of the dependency is selected for you. 
 
 ```groovy
 dependencies {

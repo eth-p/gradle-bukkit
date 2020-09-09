@@ -1,16 +1,14 @@
 package dev.ethp.bukkit.gradle;
 
 import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import groovy.lang.Closure;
 
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar;
 import dev.ethp.bukkit.gradle.dependency.DependencySpec;
 import dev.ethp.bukkit.gradle.extension.BukkitExtension;
+import dev.ethp.bukkit.gradle.extension.DependencyExtension;
 import org.gradle.api.InvalidUserDataException;
 import org.gradle.api.Project;
 import org.gradle.api.UnknownTaskException;
@@ -94,11 +92,17 @@ public abstract class AbstractDependencyFunction extends Closure<Project> {
 		}
 
 		Project project = this.getProject();
+		
+		// Inject the manifest dependencies.
+		Set<DependencyExtension> manifestDependencies = this.getExtension().getDependencies();
+		for (String plugin : this.getPluginDependencies()) {
+			manifestDependencies.add(DependencyExtension.injected(plugin));
+		}
 
 		// Inject the repositories.
 		Arrays.asList(this.getRepositories()).forEach(repo -> repo.inject(project));
 
-		// Inject the dependencies.
+		// Inject the Gradle dependencies.
 		project.getGradle().addListener(new AbstractDependencyInjector(
 				this.getProject(),
 				Arrays.asList(this.getDependencies())
@@ -115,7 +119,7 @@ public abstract class AbstractDependencyFunction extends Closure<Project> {
 						}
 					}
 				});
-				
+
 				this.getProject().getTasks().getByName("build").dependsOn("shadowJar");
 			} catch (NoClassDefFoundError | UnknownTaskException err) {
 				System.err.println("Dependency relocation for " + this.getDependencyName() + " is not possible.");
@@ -183,6 +187,14 @@ public abstract class AbstractDependencyFunction extends Closure<Project> {
 	 * @return The default version.
 	 */
 	protected abstract String getDefaultVersion();
+
+	/**
+	 * Gets the plugin IDs of this dependency.
+	 * This will automatically populate the dependencies section of the plugin manifest.
+	 *
+	 * @return The plugin IDs.
+	 */
+	protected abstract String[] getPluginDependencies();
 
 	/**
 	 * Gets whether or not the dependency can be relocated by the shadow plugin.
@@ -255,7 +267,8 @@ public abstract class AbstractDependencyFunction extends Closure<Project> {
 	}
 
 	public void setVersion(String version) {
-		if (version == null) throw new InvalidUserDataException("Bukkit: " + this.getDependencyName() + " version cannot be null.");
+		if (version == null)
+			throw new InvalidUserDataException("Bukkit: " + this.getDependencyName() + " version cannot be null.");
 		this.configured();
 		this.version = version;
 	}
@@ -300,7 +313,8 @@ public abstract class AbstractDependencyFunction extends Closure<Project> {
 	}
 
 	public void setRelocate(boolean enabled) {
-		if (enabled && !this.isRelocatable()) throw new RuntimeException("Bukkit: " + this.getDependencyName() + " cannot be relocated.");
+		if (enabled && !this.isRelocatable())
+			throw new RuntimeException("Bukkit: " + this.getDependencyName() + " cannot be relocated.");
 		this.configured();
 		this.relocate = Optional.of(enabled);
 	}

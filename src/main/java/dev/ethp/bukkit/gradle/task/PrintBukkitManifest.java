@@ -65,10 +65,12 @@ public class PrintBukkitManifest extends AbstractTask {
 
 			if (extension.getDependencies() != null) {
 				for (DependencyExtension dependency : extension.getDependencies()) {
-					this.printItem((dependency.getType() == DependencyType.OPTIONAL)
-							? String.format("%s (optional)", dependency.getName())
-							: dependency.getName()
-					);
+					this.printItem(String.format("%s%s",
+							(dependency.getType() == DependencyType.OPTIONAL)
+									? String.format("%s (optional)", dependency.getName())
+									: dependency.getName(),
+							(dependency.isInjected() ? " (automatically added)" : "")
+					));
 				}
 			}
 		}

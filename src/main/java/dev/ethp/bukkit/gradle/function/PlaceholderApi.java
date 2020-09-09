@@ -8,7 +8,7 @@ import org.gradle.api.Project;
 import static dev.ethp.bukkit.gradle.dependency.DependencySpec.*;
 
 public class PlaceholderApi extends AbstractDependencyFunction {
-	
+
 	static public String FUNCTION = "placeholderApi";
 	static public String NAME = "PlaceholderAPI";
 
@@ -37,10 +37,17 @@ public class PlaceholderApi extends AbstractDependencyFunction {
 				CommonRepository.PLACEHOLDERAPI
 		};
 	}
-	
+
+	@Override
+	protected String[] getPluginDependencies() {
+		return new String[]{
+				"PlaceholderAPI"
+		};
+	}
+
 	@Override
 	protected String getDefaultVersion() {
 		return "2.10.9";
 	}
-	
+
 }

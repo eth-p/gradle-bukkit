@@ -469,7 +469,7 @@ public class BukkitExtension {
 	// }
 	// -------------------------------------------------------------------------------------------------------------
 
-	private Set<DependencyExtension> dependencies;
+	private Set<DependencyExtension> dependencies = new HashSet<>();
 
 	public Set<DependencyExtension> getDependencies() {
 		return this.dependencies;
@@ -491,7 +491,6 @@ public class BukkitExtension {
 		// Configure.
 		DependencyExtension dependency = new DependencyExtension();
 		ConfigureUtil.configure(closure, dependency);
-
 	}
 
 	public void dependency(DependencyExtension dependency) {
@@ -499,10 +498,25 @@ public class BukkitExtension {
 
 		if (dependency == null) throw new InvalidUserDataException("The dependency cannot be null.");
 		if (dependency.getName() == null) throw new InvalidUserDataException("The dependency requires a name.");
-		if (this.dependencies.contains(dependency)) {
-			throw new InvalidUserDataException(String.format("A plugin named '%s' is already a dependency.", dependency.getName()));
-		}
 
+
+		// If one already exists, there's a chance that it might be automatically injected.
+		// User-specified dependencies take priority of injected dependencies, so we need to remove the injected one.
+		if (this.dependencies.contains(dependency)) {
+			for (DependencyExtension ext : this.dependencies) {
+				if (!ext.equals(dependency)) continue;
+				if (ext.isInjected()) {
+					this.dependencies.remove(dependency);
+				}
+			}
+
+			// Throw if the user already specified a dependency.
+			if (this.dependencies.contains(dependency)) {
+				throw new InvalidUserDataException(String.format("A plugin named '%s' is already a dependency.", dependency.getName()));
+			}
+		}
+		
+		
 		// Add.
 		this.dependencies.add(dependency);
 	}

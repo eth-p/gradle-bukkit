@@ -11,7 +11,7 @@ public class VaultApi extends AbstractDependencyFunction {
 
 	static public String FUNCTION = "vaultApi";
 	static public String NAME = "Vault API";
-	
+
 	// -------------------------------------------------------------------------------------------------------------
 	// Fields
 	// -------------------------------------------------------------------------------------------------------------
@@ -41,6 +41,13 @@ public class VaultApi extends AbstractDependencyFunction {
 	public CommonRepository[] getRepositories() {
 		return new CommonRepository[]{
 				CommonRepository.JITPACK
+		};
+	}
+
+	@Override
+	protected String[] getPluginDependencies() {
+		return new String[]{
+				"Vault"
 		};
 	}
 

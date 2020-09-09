@@ -42,6 +42,13 @@ public class LibBkCommon extends AbstractDependencyFunction {
 	}
 
 	@Override
+	protected String[] getPluginDependencies() {
+		return new String[]{
+				"BKCommonLib"
+		};
+	}
+
+	@Override
 	protected String getDefaultVersion() {
 		return "899";
 	}
