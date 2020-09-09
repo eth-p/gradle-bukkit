@@ -46,5 +46,25 @@ public class DependencySpec {
 	static public DependencySpec compileOnly(AbstractDependency dependency) {
 		return new DependencySpec("compileOnly", dependency);
 	}
+
+	/**
+	 * Creates a dependency that is included at runtime, but not re-exported to dependents.
+	 *
+	 * @param notation The dependency notation string.
+	 * @return The dependency object.
+	 */
+	static public DependencySpec implementation(String notation) {
+		return new DependencySpec("implementation", new ArtifactDependency(notation));
+	}
+
+	/**
+	 * Creates a dependency that is included at runtime, but not re-exported to dependents.
+	 *
+	 * @param dependency The dependency builder.
+	 * @return The dependency object.
+	 */
+	static public DependencySpec implementation(AbstractDependency dependency) {
+		return new DependencySpec("implementation", dependency);
+	}
 	
 }

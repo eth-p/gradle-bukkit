@@ -26,9 +26,12 @@ public class LibACF extends AbstractDependencyFunction {
 
 	@Override
 	public DependencySpec[] getDependencies() {
-		return new DependencySpec[]{
-				compileOnly("co.aikar:acf-" + this.getPlatform() + ":" + this.getVersion()),
-		};
+		String dependency = "co.aikar:acf-" + this.getPlatform() + ":" + this.getVersion();
+		if (this.getRelocate()) {
+			return new DependencySpec[]{implementation(dependency)};
+		} else {
+			return new DependencySpec[]{compileOnly(dependency)};
+		}
 	}
 
 	@Override
@@ -43,6 +46,24 @@ public class LibACF extends AbstractDependencyFunction {
 		return "0.5.0-SNAPSHOT";
 	}
 
+	@Override
+	protected boolean isRelocatable() {
+		return true;
+	}
+
+	@Override
+	protected boolean isRelocatedByDefault() {
+		return true;
+	}
+
+	@Override
+	protected String[] getRelocatedPackages() {
+		return new String[]{
+				"co.aikar.commands",
+				"co.aikar.locales",
+		};
+	}
+
 	// -------------------------------------------------------------------------------------------------------------
 	// PROPERTY: platform
 	// Option.
@@ -52,9 +73,9 @@ public class LibACF extends AbstractDependencyFunction {
 	//
 	// dependencies {
 	//     ...
-	//     libACF({
+	//     libACF {
 	//         platform = "paper"
-	//     })
+	//     }
 	// }
 	// -------------------------------------------------------------------------------------------------------------
 
