@@ -66,18 +66,19 @@ The following APIs are supported:
 
 |API|Function|
 |:--|:--|
-|Paper\*|`paperApi()`|
-|Spigot\*|`spigotApi()`|
-|Bukkit\*|`bukkitApi()`|
-|[Vault](https://www.spigotmc.org/resources/vault.34315/)|`vaultApi('version')`|
-|[PlaceholderAPI](https://www.spigotmc.org/resources/placeholderapi.6245/)|`placeholderApi()`|
+|[Bukkit](./doc/dependency/bukkit-api.md#bukkit-api)\*|`bukkitApi()`|
+|[Spigot](./doc/dependency/bukkit-api.md#spigot-api)\*|`spigotApi()`|
+|[Paper](./doc/dependency/bukkit-api.md#paper-api)\*|`paperApi()`|
+|[Vault](./doc/dependency/vault.md)|`vaultApi()`|
+|[PlaceholderAPI](./doc/dependency/placeholderapi.md)|`placeholderApi()`|
 
 \* The API version used is determined by the API version specified in the `api` DSL block.
 
 ### Libraries
 |Library|Function|
-|[BKCommonLib](https://www.spigotmc.org/resources/bkcommonlib.39590/)|`libBkCommon()`|
-|[ACF](https://www.spigotmc.org/threads/acf-beta-annotation-command-framework.234266/#post-2366730)|`libACF()`|
+|:--|:--|
+|[BKCommonLib](./doc/dependency/bkcommonlib.md)|`libBkCommon()`|
+|[ACF](./doc/dependency/acf.md)|`libACF()`|
 
 
 ## Documentation
@@ -91,6 +92,7 @@ Examples use the Groovy DSL, but the Kotlin DSL should also work.
 - [Bukkit Logger DSL](./doc/dsl/bukkit-logger.md)
 - [Command DSL](./doc/dsl/command.md)
 - [Dependency DSL](./doc/dsl/dependency.md)
+- [Dependency Function DSL](./doc/dsl/dependency-function.md)
 - [Permission DSL](./doc/dsl/permission.md)
 
 **Resources:**  
@@ -98,7 +100,10 @@ Other documentation that might be useful.
 
 - [Shadow Transformer](./doc/shadow.md)
 
-
 ## Alternatives
 
+Is there something that you need which Gradle for Bukkit isn't able to provide?
+Try one of these alternatives! 
+
 - [BukkitGradle](https://github.com/EndlessCodeGroup/BukkitGradle)
+
