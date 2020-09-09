@@ -28,11 +28,7 @@ public class LibACF extends AbstractDependencyFunction {
 	@Override
 	public DependencySpec[] getDependencies() {
 		String dependency = "co.aikar:acf-" + this.getPlatform() + ":" + this.getVersion();
-		if (this.getRelocate()) {
-			return new DependencySpec[]{implementation(dependency)};
-		} else {
-			return new DependencySpec[]{compileOnly(dependency)};
-		}
+		return new DependencySpec[]{implementation(dependency)};
 	}
 
 	@Override
