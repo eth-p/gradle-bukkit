@@ -183,7 +183,11 @@ public class RemoteDependency extends AbstractDependency {
 				OutputStream destOut = new FileOutputStream(this.destination);
 				InputStream srcIn = srcConnection.getInputStream();
 
-				IOUtils.copyLarge(srcIn, destOut); // UNSAFE: Relies on Gradle internals.
+				byte[] buffer = new byte[4096];
+				int read;
+				while ((read = srcIn.read(buffer)) != -1) {
+					destOut.write(buffer, 0, read);
+				}
 
 				srcIn.close();
 				destOut.close();
