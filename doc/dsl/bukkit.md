@@ -19,8 +19,14 @@
 |`website`|String|The plugin or plugin author's website.|
 
 \* is a required property.
-</div></details>
 
+**Meta-Properties:**  
+These properties only apply to Gradle for Bukkit.
+
+|Property|Type|Description|
+|:--|:--|:--|
+|`warnings`|Boolean|Allows disabling of manifest verification errors.|
+|`generateManifest`|Boolean|Allows disabling of `plugin.yml` generation.|
 
 
 ## Methods

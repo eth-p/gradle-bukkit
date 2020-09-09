@@ -139,7 +139,6 @@ public class BukkitExtension {
 		if (mainClass == null) throw new InvalidUserDataException("Plugin main class cannot be null.");
 
 		this.mainClass = mainClass;
-		this.setTemplate(false);
 	}
 
 	public void mainClass(String mainClass) {
@@ -596,36 +595,61 @@ public class BukkitExtension {
 
 		setLoadAt(type);
 	}
-
-
+	
 
 	// -------------------------------------------------------------------------------------------------------------
-	// PROPERTY: template
+	// PROPERTY: warnings
 	// Optional.
 	//
-	// Specifies that this should be treated as a template.
-	// This prevents verification of certain attributes and disables plugin.yml generation.
-	//
-	// If the main class is specified, this will be disabled.
+	// Turns off strict verification checks and warnings.
+	// This allows you to build a plugin without a main class.
 	//
 	// bukkit {
 	//     ...
-	//     template()
+	//     warnings = false
 	// }
 	// -------------------------------------------------------------------------------------------------------------
 
-	private boolean template;
+	private boolean warnings = true;
 
-	public boolean getTemplate() {
-		return this.template;
+	public boolean getWarnings() {
+		return this.warnings;
 	}
 
-	public void setTemplate(boolean template) {
-		this.template = template;
+	public void setWarnings(boolean enabled) {
+		this.warnings = enabled;
 	}
 
-	public void template() {
-		this.template = true;
+	public void warnings(boolean enabled) {
+		this.setWarnings(enabled);
+	}
+
+
+	// -------------------------------------------------------------------------------------------------------------
+	// PROPERTY: generateManifest
+	// Optional.
+	//
+	// Turns off plugin.yml generation.
+	// While this is a core part of the plugin, you can do it if you want to.
+	//
+	// bukkit {
+	//     ...
+	//     generateManifest = false
+	// }
+	// -------------------------------------------------------------------------------------------------------------
+
+	private boolean generateManifest = true;
+
+	public boolean getGenerateManifest() {
+		return this.generateManifest;
+	}
+
+	public void setGenerateManifest(boolean enabled) {
+		this.generateManifest = enabled;
+	}
+
+	public void generateManifest(boolean enabled) {
+		this.setGenerateManifest(enabled);
 	}
 
 }

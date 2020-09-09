@@ -170,7 +170,7 @@ public class GenerateBukkitManifest extends AbstractTask {
 
 	@Override
 	void exec() {
-		if (extension.getTemplate()) return;
+		if (!extension.getGenerateManifest()) return;
 
 		HashMap<String, Object> root = new HashMap<>();
 
