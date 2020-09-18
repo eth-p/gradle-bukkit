@@ -59,6 +59,16 @@ public class LibACF extends AbstractDependencyFunction {
 	}
 
 	@Override
+	protected boolean isMinimizable() {
+		return true;
+	}
+
+	@Override
+	protected boolean isMinimizedByDefault() {
+		return true;
+	}
+
+	@Override
 	protected String[] getRelocatedPackages() {
 		return new String[]{
 				"co.aikar.commands",
