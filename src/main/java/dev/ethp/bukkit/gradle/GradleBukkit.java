@@ -4,18 +4,16 @@ import groovy.lang.Closure;
 
 import dev.ethp.bukkit.gradle.dependency.RemoteDependency;
 import dev.ethp.bukkit.gradle.extension.BukkitExtension;
-
 import dev.ethp.bukkit.gradle.function.*;
 import dev.ethp.bukkit.gradle.hook.ValidateExtensions;
 import dev.ethp.bukkit.gradle.task.*;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
-import org.gradle.api.Task;
 import org.gradle.api.UnknownTaskException;
+import org.gradle.api.plugins.ExtensionContainer;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.TaskProvider;
-import org.gradle.internal.logging.text.StyledTextOutputFactory;
 
 public class GradleBukkit implements Plugin<Project> {
 
@@ -41,6 +39,8 @@ public class GradleBukkit implements Plugin<Project> {
 		addDependencyFunction(target, PlaceholderApi.class);
 		addDependencyFunction(target, LibBkCommon.class);
 		addDependencyFunction(target, LibACF.class);
+		addDependencyFunction(target, RoseGarden.class);
+		addDependencyFunction(target, RoseGui.class);
 
 		// Add maven central repository:
 		target.getRepositories().mavenCentral();
@@ -70,10 +70,12 @@ public class GradleBukkit implements Plugin<Project> {
 	
 	private void addDependencyFunction(Project target, Class<? extends AbstractDependencyFunction> function) {
 		try {
-			String identifier = (String) function.getField("FUNCTION").get(null);
-			AbstractDependencyFunction instance = (AbstractDependencyFunction) function.getConstructor(Project.class).newInstance(target);
+			AbstractDependencyFunction instance = function.getConstructor(Project.class).newInstance(target);
 
-			target.getExtensions().add(identifier, instance);
+			String identifier = (String) function.getField("FUNCTION").get(null);
+			ExtensionContainer container = target.getDependencies().getExtensions();
+			
+			container.add(identifier, instance);
 			target.afterEvaluate(new Closure(this) {
 				public void doCall() {
 					if (instance.isConfigured() && !instance.isInjected()) {
@@ -85,5 +87,6 @@ public class GradleBukkit implements Plugin<Project> {
 			throw new RuntimeException("Invalid gradle-bukkit dependency function.", e);
 		}
 	}
+	
 
 }

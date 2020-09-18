@@ -25,6 +25,8 @@ public class CommonRepository {
 	public static final CommonRepository SONATYPE = new CommonRepository("sonatype", "https://oss.sonatype.org/content/repositories/snapshots/");
 	public static final CommonRepository PLACEHOLDERAPI = new CommonRepository("placeholderapi", "https://repo.extendedclip.com/content/repositories/placeholderapi/");
 	public static final CommonRepository AIKAR = new CommonRepository("aikar", "https://repo.aikar.co/content/groups/aikar/");
+	public static final CommonRepository ROSEWOOD = new CommonRepository("rosewood", "https://repo.rosewooddev.io/repository/public/");
+	
 	
 	// -------------------------------------------------------------------------------------------------------------
 	// Fields

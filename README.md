@@ -80,6 +80,8 @@ The following APIs are supported:
 |:--|:--|
 |[BKCommonLib](./doc/dependency/bkcommonlib.md)|`libBkCommon()`|
 |[ACF](./doc/dependency/acf.md)|`libACF()`|
+|[GuiFramework](./doc/dependency/rose-gui.md)|`roseGui()`|
+|[RoseGarden](./doc/dependency/rose-garden.md)|`roseGarden()`|
 
 
 ## Documentation
