@@ -26,7 +26,9 @@ public class CommonRepository {
 	public static final CommonRepository PLACEHOLDERAPI = new CommonRepository("placeholderapi", "https://repo.extendedclip.com/content/repositories/placeholderapi/");
 	public static final CommonRepository AIKAR = new CommonRepository("aikar", "https://repo.aikar.co/content/groups/aikar/");
 	public static final CommonRepository ROSEWOOD = new CommonRepository("rosewood", "https://repo.rosewooddev.io/repository/public/");
-	
+	public static final CommonRepository JOREL_ALI = new CommonRepository("jorelali", "https://raw.githubusercontent.com/JorelAli/CommandAPI/mvn-repo/");
+	public static final CommonRepository CODEMC = new CommonRepository("codemc", "https://repo.codemc.org/repository/maven-public/");
+
 	
 	// -------------------------------------------------------------------------------------------------------------
 	// Fields

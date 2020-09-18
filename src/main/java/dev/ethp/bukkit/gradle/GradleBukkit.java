@@ -39,6 +39,7 @@ public class GradleBukkit implements Plugin<Project> {
 		addDependencyFunction(target, PlaceholderApi.class);
 		addDependencyFunction(target, LibBkCommon.class);
 		addDependencyFunction(target, LibACF.class);
+		addDependencyFunction(target, LibCommandApi.class);
 		addDependencyFunction(target, RoseGarden.class);
 		addDependencyFunction(target, RoseGui.class);
 
