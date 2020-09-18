@@ -1,6 +1,7 @@
 package dev.ethp.bukkit.gradle.dependency;
 
 import org.gradle.api.Project;
+import org.gradle.api.artifacts.Dependency;
 import org.gradle.api.artifacts.DependencySet;
 
 /**
@@ -23,6 +24,17 @@ public class DependencySpec {
 	public void inject(Project project) {
 		DependencySet dependencySet = project.getConfigurations().getByName(this.configuration).getDependencies();
 		dependencySet.add(this.generator.create(project));
+	}
+
+	/**
+	 * Gets the dependency object.
+	 * This will not be attached to any configuration.
+	 * 
+	 * @param project The project.
+	 * @return The dependency object.
+	 */
+	public Dependency get(Project project) {
+		return this.generator.create(project);
 	}
 
 	/**

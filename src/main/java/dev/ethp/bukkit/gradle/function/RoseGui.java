@@ -60,6 +60,16 @@ public class RoseGui extends AbstractDependencyFunction {
 	}
 
 	@Override
+	protected boolean isMinimizable() {
+		return true;
+	}
+
+	@Override
+	protected boolean isMinimizedByDefault() {
+		return true;
+	}
+	
+	@Override
 	protected String[] getRelocatedPackages() {
 		return new String[]{
 				"dev.rosewood.guiframework.gui"

@@ -4,7 +4,6 @@ import dev.ethp.bukkit.gradle.AbstractDependencyFunction;
 import dev.ethp.bukkit.gradle.CommonRepository;
 import dev.ethp.bukkit.gradle.dependency.DependencySpec;
 import org.gradle.api.Project;
-import static dev.ethp.bukkit.gradle.dependency.DependencySpec.compileOnly;
 import static dev.ethp.bukkit.gradle.dependency.DependencySpec.implementation;
 
 public class RoseGarden extends AbstractDependencyFunction {
@@ -57,6 +56,16 @@ public class RoseGarden extends AbstractDependencyFunction {
 
 	@Override
 	protected boolean isRelocatedByDefault() {
+		return true;
+	}
+
+	@Override
+	protected boolean isMinimizable() {
+		return true;
+	}
+
+	@Override
+	protected boolean isMinimizedByDefault() {
 		return true;
 	}
 

@@ -5,15 +5,18 @@ import java.util.*;
 
 import groovy.lang.Closure;
 
+import com.github.jengelman.gradle.plugins.shadow.internal.DependencyFilter;
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar;
 import dev.ethp.bukkit.gradle.dependency.DependencySpec;
 import dev.ethp.bukkit.gradle.extension.BukkitExtension;
 import dev.ethp.bukkit.gradle.extension.DependencyExtension;
+import org.gradle.api.Action;
 import org.gradle.api.InvalidUserDataException;
 import org.gradle.api.Project;
 import org.gradle.api.UnknownTaskException;
 import org.gradle.api.artifacts.DependencyResolutionListener;
 import org.gradle.api.artifacts.ResolvableDependencies;
+import org.gradle.api.artifacts.ResolvedDependency;
 
 public abstract class AbstractDependencyFunction extends Closure<Project> {
 
@@ -113,9 +116,19 @@ public abstract class AbstractDependencyFunction extends Closure<Project> {
 			try {
 				this.getProject().getTasks().getByName("shadowJar").configure(new Closure(this) {
 					public void doCall(ShadowJar task) {
+						// Relocate.
 						String destination = AbstractDependencyFunction.this.getRelocatePackage();
 						for (String original : AbstractDependencyFunction.this.getRelocatedPackages()) {
 							task.relocate(original, destination + "." + original);
+						}
+						
+						// Minimize.
+						if (AbstractDependencyFunction.this.isMinimizable() && AbstractDependencyFunction.this.getMinimize()) {
+							task.minimize(filter -> {
+								Arrays.stream(AbstractDependencyFunction.this.getDependencies())
+										.filter(dep -> dep.get(project) != null)
+										.forEach(dep -> filter.dependency(dep.get(project)));
+							});
 						}
 					}
 				});
@@ -224,6 +237,24 @@ public abstract class AbstractDependencyFunction extends Closure<Project> {
 	}
 
 	/**
+	 * Gets whether or not the dependency can be minimized by the shadow plugin.
+	 *
+	 * @return Whether the dependency is minimizable.
+	 */
+	protected boolean isMinimizable() {
+		return false;
+	}
+
+	/**
+	 * Gets whether or not the dependency is minimized by default.
+	 *
+	 * @return Whether the dependency is minimized by default.
+	 */
+	protected boolean isMinimizedByDefault() {
+		return false;
+	}
+
+	/**
 	 * Called when the dependency should be injected.
 	 */
 	protected void onInject() {
@@ -275,6 +306,41 @@ public abstract class AbstractDependencyFunction extends Closure<Project> {
 
 	public final void version(String version) {
 		this.setVersion(version);
+	}
+
+	// -------------------------------------------------------------------------------------------------------------
+	// PROPERTY: minimize
+	// Option.
+	//
+	// Minimize the dependency.
+	//
+	// dependencies {
+	//     ...
+	//     myDependency {
+	//         minimize = true
+	//     }
+	// }
+	// -------------------------------------------------------------------------------------------------------------
+
+	private Optional<Boolean> minimize = Optional.empty();
+
+	public final boolean getMinimize() {
+		return this.minimize.orElseGet(() -> this.isMinimizedByDefault());
+	}
+
+	public void setMinimize(boolean minimized) {
+		if (!isMinimizable())
+			throw new InvalidUserDataException("Bukkit: " + this.getDependencyName() + " cannot be minimized.");
+		this.configured();
+		this.minimize = Optional.of(minimized);
+	}
+
+	public final void minimize(boolean minimized) {
+		this.setMinimize(minimized);
+	}
+
+	public final void minimize() {
+		this.setMinimize(true);
 	}
 
 	// -------------------------------------------------------------------------------------------------------------
