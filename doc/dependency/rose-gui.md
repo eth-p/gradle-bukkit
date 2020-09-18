@@ -1,4 +1,4 @@
-# Dependency: RoseGarden
+# Dependency: GuiFramework
 
 [GuiFramework](https://github.com/Rosewood-Development/GuiFramework) is a library for creating Minecraft GUIs.  
 
