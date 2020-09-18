@@ -36,9 +36,7 @@ public class LibBkCommon extends AbstractDependencyFunction {
 
 	@Override
 	public CommonRepository[] getRepositories() {
-		return new CommonRepository[]{
-				CommonRepository.JITPACK
-		};
+		return new CommonRepository[0];
 	}
 
 	@Override
