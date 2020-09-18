@@ -18,3 +18,4 @@ dependencies {
 | :--------- | :------ | :----------------------------------------------------------- |
 | `version`  | String  | The dependency version.<br />By default, this is `1.1.1`. |
 | `relocate` | Boolean | Whether or not to relocate and shadow the dependency.<br />This is enabled by default. |
+| `minimize` | Boolean | Whether or not to minimize the dependency.<br />This is enabled by default. 
