@@ -31,8 +31,8 @@ public class DependencyExtension {
 		this.injected = injected;
 	}
 	
-	static public DependencyExtension injected(String name) {
-		return new DependencyExtension(name, DependencyType.REQUIRED, true);
+	static public DependencyExtension injected(String name, boolean optional) {
+		return new DependencyExtension(name, optional ? DependencyType.OPTIONAL : DependencyType.REQUIRED, true);
 	}
 
 	// -------------------------------------------------------------------------------------------------------------

@@ -56,4 +56,8 @@ public class VaultApi extends AbstractDependencyFunction {
 		return "1.7";
 	}
 
+	@Override
+	protected boolean canBeOptional() {
+		return true;
+	}
 }

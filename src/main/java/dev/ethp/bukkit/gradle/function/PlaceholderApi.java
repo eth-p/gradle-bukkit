@@ -50,4 +50,8 @@ public class PlaceholderApi extends AbstractDependencyFunction {
 		return "2.10.9";
 	}
 
+	@Override
+	protected boolean canBeOptional() {
+		return true;
+	}
 }

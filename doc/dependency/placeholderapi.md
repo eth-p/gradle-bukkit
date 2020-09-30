@@ -17,5 +17,6 @@ dependencies {
 | Property  | Type   | Description                                                |
 | :-------- | :----- | :--------------------------------------------------------- |
 | `version` | String | The dependency version.<br />By default, this is `2.10.9`. |
+| `optional` | Boolean | The dependency is optional at runtime.<br />By default, this is false. |
 
 

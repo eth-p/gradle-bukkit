@@ -5,19 +5,17 @@ import java.util.*;
 
 import groovy.lang.Closure;
 
-import com.github.jengelman.gradle.plugins.shadow.internal.DependencyFilter;
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar;
 import dev.ethp.bukkit.gradle.dependency.DependencySpec;
 import dev.ethp.bukkit.gradle.extension.BukkitExtension;
 import dev.ethp.bukkit.gradle.extension.DependencyExtension;
-import org.gradle.api.Action;
 import org.gradle.api.InvalidUserDataException;
 import org.gradle.api.Project;
 import org.gradle.api.UnknownTaskException;
 import org.gradle.api.artifacts.DependencyResolutionListener;
 import org.gradle.api.artifacts.ResolvableDependencies;
-import org.gradle.api.artifacts.ResolvedDependency;
 
+@SuppressWarnings("OptionalUsedAsFieldOrParameterType")
 public abstract class AbstractDependencyFunction extends Closure<Project> {
 
 	private boolean injectComplete = false;
@@ -99,7 +97,7 @@ public abstract class AbstractDependencyFunction extends Closure<Project> {
 		// Inject the manifest dependencies.
 		Set<DependencyExtension> manifestDependencies = this.getExtension().getDependencies();
 		for (String plugin : this.getPluginDependencies()) {
-			manifestDependencies.add(DependencyExtension.injected(plugin));
+			manifestDependencies.add(DependencyExtension.injected(plugin, this.getOptional()));
 		}
 
 		// Inject the repositories.
@@ -237,6 +235,15 @@ public abstract class AbstractDependencyFunction extends Closure<Project> {
 	}
 
 	/**
+	 * Gets whether or not the dependency can be optional.
+	 *
+	 * @return Whether the dependency is optional.
+	 */
+	protected boolean canBeOptional() {
+		return false;
+	}
+	
+	/**
 	 * Gets whether or not the dependency can be minimized by the shadow plugin.
 	 *
 	 * @return Whether the dependency is minimizable.
@@ -325,7 +332,7 @@ public abstract class AbstractDependencyFunction extends Closure<Project> {
 	private Optional<Boolean> minimize = Optional.empty();
 
 	public final boolean getMinimize() {
-		return this.minimize.orElseGet(() -> this.isMinimizedByDefault());
+		return this.minimize.orElseGet(this::isMinimizedByDefault);
 	}
 
 	public void setMinimize(boolean minimized) {
@@ -398,6 +405,41 @@ public abstract class AbstractDependencyFunction extends Closure<Project> {
 	public final void relocate(String to) {
 		this.setRelocate(true);
 		this.setRelocate(to);
+	}
+
+	// -------------------------------------------------------------------------------------------------------------
+	// PROPERTY: optional
+	// Option.
+	//
+	// Injects the dependency as optional.
+	//
+	// dependencies {
+	//     ...
+	//     myDependency {
+	//         minimize = true
+	//     }
+	// }
+	// -------------------------------------------------------------------------------------------------------------
+
+	private boolean optional = false;
+
+	public final boolean getOptional() {
+		return this.optional;
+	}
+
+	public void setOptional(boolean optional) {
+		if (!canBeOptional())
+			throw new InvalidUserDataException("Bukkit: " + this.getDependencyName() + " cannot be optional.");
+		this.configured();
+		this.optional = optional;
+	}
+
+	public final void optional(boolean optional) {
+		this.setOptional(optional);
+	}
+
+	public final void optional() {
+		this.setOptional(true);
 	}
 
 }

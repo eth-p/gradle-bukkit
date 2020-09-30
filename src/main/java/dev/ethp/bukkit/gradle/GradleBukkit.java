@@ -14,6 +14,7 @@ import org.gradle.api.plugins.ExtensionContainer;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.TaskProvider;
+import org.gradle.jvm.tasks.Jar;
 
 public class GradleBukkit implements Plugin<Project> {
 
@@ -58,6 +59,8 @@ public class GradleBukkit implements Plugin<Project> {
 					tasks.getByName("check").dependsOn(checkBukkitManifest);
 					tasks.getByName("jar").dependsOn(generateBukkitManifest);
 					tasks.getByName("compileJava").dependsOn(downloadLibraries);
+					
+					((Jar) tasks.getByName("jar")).from(generateBukkitManifest);
 				}
 				
 				try {

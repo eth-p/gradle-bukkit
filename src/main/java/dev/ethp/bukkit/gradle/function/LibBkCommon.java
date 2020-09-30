@@ -51,4 +51,9 @@ public class LibBkCommon extends AbstractDependencyFunction {
 		return "899";
 	}
 
+	@Override
+	protected boolean canBeOptional() {
+		return true;
+	}
+	
 }

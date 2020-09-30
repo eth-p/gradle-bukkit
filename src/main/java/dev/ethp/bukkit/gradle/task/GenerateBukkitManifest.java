@@ -9,8 +9,6 @@ import java.util.stream.Collectors;
 import dev.ethp.bukkit.gradle.extension.*;
 import org.gradle.api.tasks.Internal;
 import org.gradle.api.tasks.OutputFile;
-import org.gradle.api.tasks.SourceSet;
-import org.gradle.api.tasks.SourceSetContainer;
 import org.yaml.snakeyaml.Yaml;
 
 /**
