@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import dev.ethp.bukkit.gradle.extension.*;
 import org.gradle.api.tasks.Internal;
+import org.gradle.api.tasks.OutputFile;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.SourceSetContainer;
 import org.yaml.snakeyaml.Yaml;
@@ -18,6 +19,23 @@ import org.yaml.snakeyaml.Yaml;
 public class GenerateBukkitManifest extends AbstractTask {
 
 	public static String NAME = "generateBukkitManifest";
+
+	private File output = null;
+
+	// -------------------------------------------------------------------------------------------------------------
+	// Properties
+	// -------------------------------------------------------------------------------------------------------------
+
+	@OutputFile
+	public File getOutput() {
+		if (this.output != null) return this.output;
+		return new File(this._getDefaultOutputDirectory(), "plugin.yml");
+	}
+
+	public void setOutput(File output) {
+		this.output = output;
+	}
+
 
 	// -------------------------------------------------------------------------------------------------------------
 	// Methods
@@ -127,24 +145,16 @@ public class GenerateBukkitManifest extends AbstractTask {
 		parent.put(permission.getName(), map);
 	}
 
-	protected void save(String file, String data) {
-		// Find an appropriate source set for generated data.
-		SourceSetContainer sourceSets = (SourceSetContainer) this.getProject().getProperties().get("sourceSets");
-		SourceSet targetSet = null;
-		for (SourceSet sourceSet : sourceSets) {
-			if (targetSet == null) targetSet = sourceSet;
-			if (sourceSet.getName().equals("main")) targetSet = sourceSet;
-			if (sourceSet.getName().equals("generated")) {
-				targetSet = sourceSet;
-				break;
-			}
-		}
+	protected File _getDefaultOutputDirectory() { // underscore to suppress Gradle 7.0 warning
+		return new File(new File(this.getProject().getBuildDir(), "resources"), "bukkit");
+	}
 
+	@SuppressWarnings("ResultOfMethodCallIgnored")
+	protected void save(File file, String data) {
 		// Save the file.
 		try {
-			File targetFile = new File(targetSet.getOutput().getResourcesDir(), file);
-			targetFile.getParentFile().mkdirs();
-			BufferedWriter writer = new BufferedWriter(new FileWriter(targetFile));
+			file.getParentFile().mkdirs();
+			BufferedWriter writer = new BufferedWriter(new FileWriter(file));
 			writer.write(data);
 			writer.close();
 		} catch (Exception ex) {
@@ -189,7 +199,7 @@ public class GenerateBukkitManifest extends AbstractTask {
 		serialized.append(serializer.dump(root));
 
 		// Write to resources.
-		save("plugin.yml", serialized.toString());
+		save(this.getOutput(), serialized.toString());
 	}
 
 
